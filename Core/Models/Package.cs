@@ -3,7 +3,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 
-namespace SecurePad.Core
+namespace SecurePad.Core.Models
 {
 
     [Serializable]
@@ -14,17 +14,19 @@ namespace SecurePad.Core
         private static readonly BinaryFormatter Formatter = new BinaryFormatter();
 
         private readonly string _password;
+        private readonly string _seed;
 
         public string Content { get; set; }
 
-        public Package(string password)
+        public Package(string password, string seed)
         {
             _password = password;
+            _seed = seed;
         }
 
-        public bool Verify(string password)
+        public bool Verify(string password, string seed)
         {
-            return _password == password;
+            return _password == password && _seed == seed;
         }
 
         public void Save(string output)

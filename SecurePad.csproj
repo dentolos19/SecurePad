@@ -66,7 +66,6 @@
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xaml">
@@ -87,7 +86,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\Package.cs" />
+    <Compile Include="Core\Configuration.cs" />
+    <Compile Include="Core\Models\Package.cs" />
+    <Compile Include="Graphics\WnAbout.xaml.cs">
+      <DependentUpon>WnAbout.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Graphics\WnMain.xaml.cs">
       <DependentUpon>WnMain.xaml</DependentUpon>
     </Compile>
@@ -112,6 +115,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Page Include="Graphics\WnAbout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Graphics\WnMain.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using Microsoft.VisualBasic;
 using Microsoft.Win32;
-using SecurePad.Core;
+using SecurePad.Core.Models;
 
 namespace SecurePad.Graphics
 {
@@ -9,8 +9,8 @@ namespace SecurePad.Graphics
     public partial class WnMain
     {
 
-        private Package Current;
-        private string Location;
+        private Package _current;
+        private string _location;
 
         public WnMain()
         {
@@ -19,8 +19,8 @@ namespace SecurePad.Graphics
 
         private void New(object sender, RoutedEventArgs e)
         {
-            Current = null;
-            Location = string.Empty;
+            _current = null;
+            _location = string.Empty;
             Document.Text = string.Empty;
         }
 
@@ -35,28 +35,28 @@ namespace SecurePad.Graphics
                 return;
             var document = Package.Load(openDialog.FileName);
             var password = Interaction.InputBox("Enter the password for this document.", "SecurePad Password Manager");
-            if (document.Verify(password))
+            if (document.Verify(password, App.Settings.Seed))
             {
-                Current = document;
-                Location = openDialog.FileName;
-                Document.Text = Current.Content;
+                _current = document;
+                _location = openDialog.FileName;
+                Document.Text = _current.Content;
             }
             else
             {
-                MessageBox.Show("Password is incorrect, access is denied!", "SecurePad Password Manager");
+                MessageBox.Show("Password or security seed is incorrect, access is denied!", "SecurePad Password Manager");
             }
         }
 
         private void Save(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(Location))
+            if (string.IsNullOrEmpty(_location))
             {
                 SaveAs(null, null);
             }
             else
             {
-                Current.Content = Document.Text;
-                Current.Save(Location);
+                _current.Content = Document.Text;
+                _current.Save(_location);
             }
         }
 
@@ -70,12 +70,12 @@ namespace SecurePad.Graphics
             if (saveDialog.ShowDialog() == false)
                 return;
             var password = Interaction.InputBox("Enter new password for this document.", "SecurePad Password Manager");
-            Location = saveDialog.FileName;
-            Current = new Package(password)
+            _location = saveDialog.FileName;
+            _current = new Package(password, App.Settings.Seed)
             {
                 Content = Document.Text
             };
-            Current.Save(Location);
+            _current.Save(_location);
         }
 
         private void Exit(object sender, RoutedEventArgs e)
@@ -118,6 +118,20 @@ namespace SecurePad.Graphics
         private void SelectAll(object sender, RoutedEventArgs e)
         {
             Document.SelectAll();
+        }
+
+        private void UpdateSecuritySeed(object sender, RoutedEventArgs e)
+        {
+            var seed = Interaction.InputBox("The file will only open if the password and the security seed are correct.\n\nChange this to add extra layer of protection.", "SecurePad Security Manager", App.Settings.Seed);
+            if (string.IsNullOrEmpty(seed) || seed == App.Settings.Seed)
+                return;
+            App.Settings.Seed = seed;
+            App.Settings.Save();
+        }
+
+        private void OpenAbout(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("This area is not implement yet!", "SecurePad Development");
         }
 
     }
