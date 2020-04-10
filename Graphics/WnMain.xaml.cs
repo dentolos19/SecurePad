@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 using Microsoft.VisualBasic;
 using Microsoft.Win32;
 using SecurePad.Core.Models;
@@ -24,6 +25,7 @@ namespace SecurePad.Graphics
                 _current = document;
                 _location = location;
                 Document.Text = _current.Content;
+                Document.IsModified = false;
             }
             else
             {
@@ -33,9 +35,17 @@ namespace SecurePad.Graphics
 
         private void New(object sender, RoutedEventArgs e)
         {
+            if (!Document.IsModified)
+                return;
+            var result = MessageBox.Show("You have unsaved work, would you like to save the current one?", "", MessageBoxButton.YesNoCancel);
+            if (result == MessageBoxResult.Cancel)
+                return;
+            if (result == MessageBoxResult.Yes)
+                Save(null, null);
             _current = null;
             _location = string.Empty;
             Document.Text = string.Empty;
+            Document.IsModified = false;
         }
 
         private void Open(object sender, RoutedEventArgs e)
@@ -54,6 +64,7 @@ namespace SecurePad.Graphics
                 _current = document;
                 _location = openDialog.FileName;
                 Document.Text = _current.Content;
+                Document.IsModified = false;
             }
             else
             {
@@ -71,6 +82,7 @@ namespace SecurePad.Graphics
             {
                 _current.Content = Document.Text;
                 _current.Save(_location);
+                Document.IsModified = false;
             }
         }
 
@@ -90,6 +102,7 @@ namespace SecurePad.Graphics
                 Content = Document.Text
             };
             _current.Save(_location);
+            Document.IsModified = false;
         }
 
         private void Exit(object sender, RoutedEventArgs e)
@@ -161,6 +174,7 @@ namespace SecurePad.Graphics
                     _current = document;
                     _location = data[0];
                     Document.Text = _current.Content;
+                    Document.IsModified = false;
                 }
                 else
                 {
@@ -171,6 +185,17 @@ namespace SecurePad.Graphics
             {
                 MessageBox.Show("You can only drop one file at a time!", "SecurePad File Dropper");
             }
+        }
+
+        private void CheckUnsaved(object sender, CancelEventArgs e)
+        {
+            if (!Document.IsModified)
+                return;
+            var result = MessageBox.Show("You have unsaved work, would you like to save the current one?", "", MessageBoxButton.YesNoCancel);
+            if (result == MessageBoxResult.Cancel)
+                e.Cancel = true;
+            else if (result == MessageBoxResult.Yes)
+                Save(null, null);
         }
 
     }
