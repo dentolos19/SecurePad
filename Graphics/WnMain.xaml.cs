@@ -12,9 +12,23 @@ namespace SecurePad.Graphics
         private Package _current;
         private string _location;
 
-        public WnMain()
+        public WnMain(string location = null)
         {
             InitializeComponent();
+            if (string.IsNullOrEmpty(location))
+                return;
+            var document = Package.Load(location);
+            var password = Interaction.InputBox("Enter the password for this document.", "SecurePad Password Manager");
+            if (document.Verify(password, App.Settings.Seed))
+            {
+                _current = document;
+                _location = location;
+                Document.Text = _current.Content;
+            }
+            else
+            {
+                MessageBox.Show("Password or security seed is incorrect, access is denied!", "SecurePad Password Manager");
+            }
         }
 
         private void New(object sender, RoutedEventArgs e)
@@ -132,6 +146,31 @@ namespace SecurePad.Graphics
         private void OpenAbout(object sender, RoutedEventArgs e)
         {
             new WnAbout().ShowDialog();
+        }
+
+        private void FileDrop(object sender, DragEventArgs e)
+        {
+            if (!e.Data.GetDataPresent(DataFormats.FileDrop))
+                return;
+            if (e.Data.GetData(DataFormats.FileDrop) is string[] data && data.Length == 1)
+            {
+                var document = Package.Load(data[0]);
+                var password = Interaction.InputBox("Enter the password for this document.", "SecurePad Password Manager");
+                if (document.Verify(password, App.Settings.Seed))
+                {
+                    _current = document;
+                    _location = data[0];
+                    Document.Text = _current.Content;
+                }
+                else
+                {
+                    MessageBox.Show("Password or security seed is incorrect, access is denied!", "SecurePad Password Manager");
+                }
+            }
+            else
+            {
+                MessageBox.Show("You can only drop one file at a time!", "SecurePad File Dropper");
+            }
         }
 
     }

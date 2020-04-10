@@ -43,6 +43,6 @@
                 <MenuItem Header="About SecurePad" Click="OpenAbout"/>
             </MenuItem>
         </Menu>
-        <avalonEdit:TextEditor x:Name="Document" ShowLineNumbers="True" FontFamily="Consolas"/>
+        <avalonEdit:TextEditor x:Name="Document" ShowLineNumbers="True" FontFamily="Consolas" AllowDrop="True" Drop="FileDrop"/>
     </DockPanel>
 </Window>

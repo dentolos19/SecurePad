@@ -8,11 +8,14 @@ namespace SecurePad
     public partial class App
     {
 
-        internal static Configuration Settings = Configuration.Load();
+        internal static readonly Configuration Settings = Configuration.Load();
 
         private void Initialize(object sender, StartupEventArgs e)
         {
-            new WnMain().Show();
+            if (e.Args.Length == 1)
+                new WnMain(e.Args[0]).Show();
+            else
+                new WnMain().Show();
         }
 
     }
