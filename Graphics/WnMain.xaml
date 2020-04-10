@@ -1,0 +1,43 @@
+﻿<Window x:Class="SecurePad.Graphics.WnMain"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+        Title="SecurePad">
+    <Window.CommandBindings>
+        <CommandBinding Command="New" Executed="New"/>
+        <CommandBinding Command="Open" Executed="Open"/>
+        <CommandBinding Command="Save" Executed="Save"/>
+        <CommandBinding Command="SaveAs" Executed="SaveAs"/>
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding Key="N" Modifiers="Control" Command="New"/>
+        <KeyBinding Key="O" Modifiers="Control" Command="Open"/>
+        <KeyBinding Key="S" Modifiers="Control" Command="Save"/>
+        <KeyBinding Key="S" Modifiers="Control+Shift" Command="SaveAs"/>
+    </Window.InputBindings>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="New" Click="New" InputGestureText="Ctrl+N"/>
+                <MenuItem Header="Open" Click="Open" InputGestureText="Ctrl+O"/>
+                <Separator/>
+                <MenuItem Header="Save" Click="Save" InputGestureText="Ctrl+S"/>
+                <MenuItem Header="Save As" Click="SaveAs" InputGestureText="Ctrl+Shift+S"/>
+                <Separator/>
+                <MenuItem Header="Exit" Click="Exit" InputGestureText="Alt+F4"/>
+            </MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem Header="Undo" Click="Undo" InputGestureText="Ctrl+Z"/>
+                <MenuItem Header="Redo" Click="Redo" InputGestureText="Ctrl+Y"/>
+                <Separator/>
+                <MenuItem Header="Cut" Click="Cut" InputGestureText="Ctrl+X"/>
+                <MenuItem Header="Copy" Click="Copy" InputGestureText="Ctrl+C"/>
+                <MenuItem Header="Paste" Click="Paste" InputGestureText="Ctrl+V"/>
+                <MenuItem Header="Delete" Click="Delete" InputGestureText="Del"/>
+                <Separator/>
+                <MenuItem Header="Select All" Click="SelectAll" InputGestureText="Ctrl+A"/>
+            </MenuItem>
+        </Menu>
+        <avalonEdit:TextEditor x:Name="Document" ShowLineNumbers="True" FontFamily="Consolas"/>
+    </DockPanel>
+</Window>

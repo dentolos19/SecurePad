@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using SecurePad.Graphics;
 
 namespace SecurePad
 {
@@ -8,7 +9,7 @@ namespace SecurePad
 
         private void Initialize(object sender, StartupEventArgs e)
         {
-
+            new WnMain().Show();
         }
 
     }
