@@ -131,7 +131,7 @@ namespace SecurePad.Graphics
 
         private void OpenAbout(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("This area is not implement yet!", "SecurePad Development");
+            new WnAbout().ShowDialog();
         }
 
     }
