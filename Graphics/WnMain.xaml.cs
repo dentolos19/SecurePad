@@ -37,7 +37,7 @@ namespace SecurePad.Graphics
         {
             if (!Document.IsModified)
                 return;
-            var result = MessageBox.Show("You have unsaved work, would you like to save the current one?", "", MessageBoxButton.YesNoCancel);
+            var result = MessageBox.Show("You have unsaved work, would you like to save the current one?", "SecurePad File Safety", MessageBoxButton.YesNoCancel);
             if (result == MessageBoxResult.Cancel)
                 return;
             if (result == MessageBoxResult.Yes)
@@ -191,7 +191,7 @@ namespace SecurePad.Graphics
         {
             if (!Document.IsModified)
                 return;
-            var result = MessageBox.Show("You have unsaved work, would you like to save the current one?", "", MessageBoxButton.YesNoCancel);
+            var result = MessageBox.Show("You have unsaved work, would you like to save the current one?", "SecurePad File Safety", MessageBoxButton.YesNoCancel);
             if (result == MessageBoxResult.Cancel)
                 e.Cancel = true;
             else if (result == MessageBoxResult.Yes)
