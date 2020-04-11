@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows;
 using Microsoft.VisualBasic;
 using Microsoft.Win32;
+using SecurePad.Core;
 using SecurePad.Core.Models;
 
 namespace SecurePad.Graphics
@@ -196,6 +198,27 @@ namespace SecurePad.Graphics
                 e.Cancel = true;
             else if (result == MessageBoxResult.Yes)
                 Save(null, null);
+        }
+
+        private void CheckForUpdates(object sender, RoutedEventArgs e)
+        {
+            if (Utilities.IsUserOnline())
+            {
+                if (!Utilities.IsUpdateAvailable())
+                {
+                    var result = MessageBox.Show(@"Updates is available! Do you want to download it now?", @"SecurePad Update Checker", MessageBoxButton.YesNo);
+                    if (result == MessageBoxResult.Yes)
+                        Process.Start("https://github.com/dentolos19/SecurePad/releases");
+                }
+                else
+                {
+                    MessageBox.Show("No updates is available, keep doing your thing!", "SecurePad Update Checker");
+                }
+            }
+            else
+            {
+                MessageBox.Show("An internet connection is required for this operation!", "SecurePad Update Checker");
+            }
         }
 
     }

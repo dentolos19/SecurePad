@@ -91,6 +91,7 @@
   <ItemGroup>
     <Compile Include="Core\Configuration.cs" />
     <Compile Include="Core\Models\Package.cs" />
+    <Compile Include="Core\Utilities.cs" />
     <Compile Include="Graphics\WnAbout.xaml.cs">
       <DependentUpon>WnAbout.xaml</DependentUpon>
     </Compile>

@@ -38,6 +38,7 @@
                 <MenuItem Header="Select All" Click="SelectAll" InputGestureText="Ctrl+A"/>
             </MenuItem>
             <MenuItem Header="Options">
+                <MenuItem Header="Check For Updates" Click="CheckForUpdates"/>
                 <MenuItem Header="Update Security Seed" Click="UpdateSecuritySeed"/>
                 <Separator/>
                 <MenuItem Header="About SecurePad" Click="OpenAbout"/>
