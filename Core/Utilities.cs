@@ -24,7 +24,7 @@ namespace SecurePad.Core
             var client = new WebClient();
             var data = client.DownloadString("https://raw.githubusercontent.com/dentolos19/SecurePad/master/VERSION");
             client.Dispose();
-            return Version.Parse(data) > Assembly.GetExecutingAssembly().GetName().Version;
+            return Version.Parse(data) < Assembly.GetExecutingAssembly().GetName().Version;
         }
 
     }
