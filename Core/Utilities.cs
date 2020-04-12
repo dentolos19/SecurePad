@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Windows;
 
 namespace SecurePad.Core
 {
@@ -41,6 +43,22 @@ namespace SecurePad.Core
             for (var index = 0; index < bytes.Length; index++)
                 bytes[index] = Convert.ToByte(data.Substring(index * 2, 2), 16);
             return Encoding.Unicode.GetString(bytes);
+        }
+
+        public static void Restart(string args = null)
+        {
+            if (string.IsNullOrEmpty(args))
+                args = string.Empty;
+            var task = new Process
+            {
+                StartInfo =
+                {
+                    FileName = Assembly.GetExecutingAssembly().Location,
+                    Arguments = args
+                }
+            };
+            task.Start();
+            Application.Current.Shutdown();
         }
 
     }

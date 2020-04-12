@@ -1,8 +1,9 @@
-﻿<Window x:Class="SecurePad.Graphics.WnMain"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
-        Title="SecurePad" Closing="CheckUnsaved">
+﻿<mahApps:MetroWindow x:Class="SecurePad.Graphics.WnMain"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+                     xmlns:mahApps="http://metro.mahapps.com/winfx/xaml/controls"
+                     Title="SecurePad" Closing="CheckUnsaved" TitleCharacterCasing="Normal">
     <Window.CommandBindings>
         <CommandBinding Command="New" Executed="New"/>
         <CommandBinding Command="Open" Executed="Open"/>
@@ -38,12 +39,18 @@
                 <MenuItem Header="Select All" Click="SelectAll" InputGestureText="Ctrl+A"/>
             </MenuItem>
             <MenuItem Header="Options">
+                <MenuItem Header="Change App Theme">
+                    <MenuItem x:Name="MenuThemeSwitchItem" Header="Switch To " Click="SwitchThemeMode"/>
+                    <ComboBox x:Name="MenuAccentComboBox">
+                        <ComboBoxItem Content="Cobalt"/>
+                    </ComboBox>
+                </MenuItem>
                 <MenuItem Header="Check For Updates" Click="CheckForUpdates"/>
                 <MenuItem Header="Update Security Seed" Click="UpdateSecuritySeed"/>
                 <Separator/>
                 <MenuItem Header="About SecurePad" Click="OpenAbout"/>
             </MenuItem>
         </Menu>
-        <avalonEdit:TextEditor x:Name="Document" ShowLineNumbers="True" FontFamily="Consolas" AllowDrop="True" Drop="FileDrop"/>
+        <avalonEdit:TextEditor x:Name="Document" ShowLineNumbers="True" FontFamily="Consolas" AllowDrop="True" Drop="FileDrop" FontSize="16"/>
     </DockPanel>
-</Window>
+</mahApps:MetroWindow>

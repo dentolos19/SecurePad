@@ -1,9 +1,10 @@
-﻿<Window x:Class="SecurePad.Graphics.WnAbout"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="About SecurePad" Width="500" SizeToContent="Height" ResizeMode="NoResize">
+﻿<mahApps:MetroWindow x:Class="SecurePad.Graphics.WnAbout"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:mahApps="http://metro.mahapps.com/winfx/xaml/controls"
+                     Title="About SecurePad" Width="500" SizeToContent="Height" ResizeMode="NoResize" TitleCharacterCasing="Normal">
     <DockPanel>
-        <DockPanel DockPanel.Dock="Top" Height="50" Background="WhiteSmoke">
+        <DockPanel x:Name="TopPanel" DockPanel.Dock="Top" Height="50" Background="WhiteSmoke">
             <Image Source="../Icon.ico" Margin="10,10,10,10" Width="30"/>
             <Button Content="OK" Width="50" Margin="10,10,10,10" DockPanel.Dock="Right" Click="Exit"/>
             <Label Content="SecurePad" VerticalContentAlignment="Center" Margin="0,10,0,10" FontSize="16"/>
@@ -15,8 +16,8 @@
             </DockPanel>
             <DockPanel Margin="10,0,10,10">
                 <Label Content="Version" VerticalContentAlignment="Center" Width="75"/>
-                <TextBox Text="1.0.2 (Released on 4/11/2020)" VerticalContentAlignment="Center" IsReadOnly="True"/>
+                <TextBox Text="1.1.0 (Released on 4/12/2020)" VerticalContentAlignment="Center" IsReadOnly="True"/>
             </DockPanel>
         </StackPanel>
     </DockPanel>
-</Window>
+</mahApps:MetroWindow>

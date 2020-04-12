@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Media;
+using MahApps.Metro.Controls.Dialogs;
 using Microsoft.VisualBasic;
 using Microsoft.Win32;
 using SecurePad.Core;
@@ -15,13 +17,24 @@ namespace SecurePad.Graphics
         private Package _current;
         private string _location;
 
-        public WnMain(string location = null)
+        public WnMain(string location = null, string password = null)
         {
             InitializeComponent();
+            if (App.Settings.IsDarkMode)
+            {
+                Document.Foreground = Brushes.White;
+                MenuThemeSwitchItem.Header += "Light Mode";
+            }
+            else
+            {
+                MenuThemeSwitchItem.Header += "Dark Mode";
+            }
+            MenuAccentComboBox.Text = App.Settings.Accent;
             if (string.IsNullOrEmpty(location))
                 return;
             var document = Package.Load(location);
-            var password = Interaction.InputBox("Enter the password for this document.", "SecurePad Password Manager");
+            if (string.IsNullOrEmpty(password))
+                password = Interaction.InputBox("Enter the password for this document.", "SecurePad Password Manager");
             if (document.Verify(password, App.Settings.Seed))
             {
                 _current = document;
@@ -31,18 +44,23 @@ namespace SecurePad.Graphics
             }
             else
             {
-                MessageBox.Show("Password or security seed is incorrect, access is denied!", "SecurePad Password Manager");
+                MessageBox.Show("Either password or security seed is wrong, access is denied!", "SecurePad Password Manager");
             }
         }
 
-        private void New(object sender, RoutedEventArgs e)
+        private async void New(object sender, RoutedEventArgs e)
         {
             if (!Document.IsModified)
                 return;
-            var result = MessageBox.Show("You have unsaved work, would you like to save the current one?", "SecurePad File Safety", MessageBoxButton.YesNoCancel);
-            if (result == MessageBoxResult.Cancel)
+            var result = await this.ShowMessageAsync("SecurePad File Safety", "You have unsaved work, would you like to save the current one?", MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, new MetroDialogSettings
+            {
+                AffirmativeButtonText = "Yes",
+                NegativeButtonText = "No",
+                FirstAuxiliaryButtonText = "Cancel"
+            });
+            if (result == MessageDialogResult.FirstAuxiliary)
                 return;
-            if (result == MessageBoxResult.Yes)
+            if (result == MessageDialogResult.Affirmative)
                 Save(null, null);
             _current = null;
             _location = string.Empty;
@@ -50,7 +68,7 @@ namespace SecurePad.Graphics
             Document.IsModified = false;
         }
 
-        private void Open(object sender, RoutedEventArgs e)
+        private async void Open(object sender, RoutedEventArgs e)
         {
             var openDialog = new OpenFileDialog
             {
@@ -60,7 +78,7 @@ namespace SecurePad.Graphics
             if (openDialog.ShowDialog() == false)
                 return;
             var document = Package.Load(openDialog.FileName);
-            var password = Interaction.InputBox("Enter the password for this document.", "SecurePad Password Manager");
+            var password = await this.ShowInputAsync("SecurePad Password Manager", "Enter the password for this document.");
             if (document.Verify(password, App.Settings.Seed))
             {
                 _current = document;
@@ -70,7 +88,7 @@ namespace SecurePad.Graphics
             }
             else
             {
-                MessageBox.Show("Password or security seed is incorrect, access is denied!", "SecurePad Password Manager");
+                await this.ShowMessageAsync("SecurePad Password Manager", "Either password or security seed is wrong, access is denied!");
             }
         }
 
@@ -88,7 +106,7 @@ namespace SecurePad.Graphics
             }
         }
 
-        private void SaveAs(object sender, RoutedEventArgs e)
+        private async void SaveAs(object sender, RoutedEventArgs e)
         {
             var saveDialog = new SaveFileDialog
             {
@@ -97,7 +115,10 @@ namespace SecurePad.Graphics
             };
             if (saveDialog.ShowDialog() == false)
                 return;
-            var password = Interaction.InputBox("Enter new password for this document.", "SecurePad Password Manager");
+            var password = await this.ShowInputAsync("SecurePad Password Manager", "Enter a new password for this document.", new MetroDialogSettings
+            {
+                DefaultText = _current.Password
+            });
             _location = saveDialog.FileName;
             _current = new Package
             {
@@ -151,9 +172,12 @@ namespace SecurePad.Graphics
             Document.SelectAll();
         }
 
-        private void UpdateSecuritySeed(object sender, RoutedEventArgs e)
+        private async void UpdateSecuritySeed(object sender, RoutedEventArgs e)
         {
-            var seed = Interaction.InputBox("The file will only open if the password and the security seed are correct.\n\nChange this to add extra layer of protection.", "SecurePad Security Manager", App.Settings.Seed);
+            var seed = await this.ShowInputAsync("SecurePad Security Manager", "The file will only open if the password and the security seed are correct.\n\nChange this to add extra layer of protection.", new MetroDialogSettings()
+            {
+                DefaultText = App.Settings.Seed
+            });
             if (string.IsNullOrEmpty(seed) || seed == App.Settings.Seed)
                 return;
             App.Settings.Seed = seed;
@@ -165,14 +189,14 @@ namespace SecurePad.Graphics
             new WnAbout().ShowDialog();
         }
 
-        private void FileDrop(object sender, DragEventArgs e)
+        private async void FileDrop(object sender, DragEventArgs e)
         {
             if (!e.Data.GetDataPresent(DataFormats.FileDrop))
                 return;
             if (e.Data.GetData(DataFormats.FileDrop) is string[] data && data.Length == 1)
             {
                 var document = Package.Load(data[0]);
-                var password = Interaction.InputBox("Enter the password for this document.", "SecurePad Password Manager");
+                var password = await this.ShowInputAsync("SecurePad Password Manager", "Enter the password for this document.");
                 if (document.Verify(password, App.Settings.Seed))
                 {
                     _current = document;
@@ -182,12 +206,12 @@ namespace SecurePad.Graphics
                 }
                 else
                 {
-                    MessageBox.Show("Password or security seed is incorrect, access is denied!", "SecurePad Password Manager");
+                    await this.ShowMessageAsync("SecurePad Password Manager", "Either password or security seed is wrong, access is denied!");
                 }
             }
             else
             {
-                MessageBox.Show("You can only drop one file at a time!", "SecurePad File Dropper");
+                await this.ShowMessageAsync("SecurePad File Dropper", "You can only drop one file at a time!");
             }
         }
 
@@ -198,29 +222,55 @@ namespace SecurePad.Graphics
             var result = MessageBox.Show("You have unsaved work, would you like to save the current one?", "SecurePad File Safety", MessageBoxButton.YesNoCancel);
             if (result == MessageBoxResult.Cancel)
                 e.Cancel = true;
-            else if (result == MessageBoxResult.Yes)
+            if (result == MessageBoxResult.Yes)
                 Save(null, null);
         }
 
-        private void CheckForUpdates(object sender, RoutedEventArgs e)
+        private async void CheckForUpdates(object sender, RoutedEventArgs e)
         {
             if (Utilities.IsUserOnline())
             {
                 if (!Utilities.IsUpdateAvailable())
                 {
-                    var result = MessageBox.Show(@"Updates is available! Do you want to download it now?", @"SecurePad Update Checker", MessageBoxButton.YesNo);
-                    if (result == MessageBoxResult.Yes)
+                    var result = await this.ShowMessageAsync("SecurePad Update Checker", "Updates are available! Do you want to go visit the download page?", MessageDialogStyle.AffirmativeAndNegative, new MetroDialogSettings
+                    {
+                        AffirmativeButtonText = "Yes",
+                        NegativeButtonText = "No"
+                    });
+                    if (result == MessageDialogResult.Affirmative)
                         Process.Start("https://github.com/dentolos19/SecurePad/releases");
                 }
                 else
                 {
-                    MessageBox.Show("No updates is available, keep doing your thing!", "SecurePad Update Checker");
+                    await this.ShowMessageAsync("SecurePad Update Checker", "No updates are available, keep doing your thing!");
                 }
             }
             else
             {
-                MessageBox.Show("An internet connection is required for this operation!", "SecurePad Update Checker");
+                await this.ShowMessageAsync("SecurePad Update Checker", "An internet connection is required to perform this operation!");
             }
+        }
+
+        private async void SwitchThemeMode(object sender, RoutedEventArgs e)
+        {
+            if (App.Settings.IsDarkMode)
+                App.Settings.IsDarkMode = false;
+            else
+                App.Settings.IsDarkMode = true;
+            App.Settings.Save();
+            var result = await this.ShowMessageAsync("SecurePad Theme Manager", "Do you want to restart to take effect?", MessageDialogStyle.AffirmativeAndNegative, new MetroDialogSettings
+            {
+                AffirmativeButtonText = "Yes",
+                NegativeButtonText = "No"
+            });
+            if (result == MessageDialogResult.Affirmative)
+            {
+                if (string.IsNullOrEmpty(_location))
+                    Utilities.Restart();
+                else
+                    Utilities.Restart("\"" + _location + "\" \"" + _current.Password + "\"");
+            }
+                
         }
 
     }

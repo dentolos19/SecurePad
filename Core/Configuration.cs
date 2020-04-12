@@ -12,6 +12,8 @@ namespace SecurePad.Core
         private static readonly string Source = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SecurePad.cfg");
         private static readonly XmlSerializer Serializer = new XmlSerializer(typeof(Configuration));
 
+        public bool IsDarkMode = true;
+        public string Accent = "Cobalt";
         public string Seed = "S3CUR3P4D";
 
         public void Save()
