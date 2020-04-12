@@ -13,8 +13,8 @@ namespace SecurePad.Core.Models
         private static readonly string Temp = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SecurePad.tmp");
         private static readonly BinaryFormatter Formatter = new BinaryFormatter();
 
-        private readonly string _password;
-        private readonly string _seed;
+        private string _password;
+        private string _seed;
 
         public string Content { get; set; }
 
@@ -31,6 +31,8 @@ namespace SecurePad.Core.Models
 
         public void Save(string output)
         {
+            _seed = Utilities.ToHexString(_seed);
+            _password = Utilities.ToHexString(_password);
             var stream = new FileStream(Temp, FileMode.Create);
             Formatter.Serialize(stream, this);
             stream.Close();
@@ -47,6 +49,8 @@ namespace SecurePad.Core.Models
             var output = Formatter.Deserialize(stream) as Package;
             stream.Close();
             File.Delete(Temp);
+            output._seed = Utilities.FromHexString(output._seed);
+            output._password = Utilities.FromHexString(output._password);
             return output;
         }
 
