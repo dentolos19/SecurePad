@@ -52,7 +52,7 @@ namespace SecurePad.Graphics
 
         private void Open(object sender, RoutedEventArgs e)
         {
-            var openDialog = new OpenFileDialog()
+            var openDialog = new OpenFileDialog
             {
                 Title = "SecurePad File Opener",
                 Filter = "SecurePad Encrypted File|*.spef"
@@ -90,7 +90,7 @@ namespace SecurePad.Graphics
 
         private void SaveAs(object sender, RoutedEventArgs e)
         {
-            var saveDialog = new SaveFileDialog()
+            var saveDialog = new SaveFileDialog
             {
                 Title = "SecurePad File Saver",
                 Filter = "SecurePad Encrypted File|*.spef"
@@ -99,8 +99,10 @@ namespace SecurePad.Graphics
                 return;
             var password = Interaction.InputBox("Enter new password for this document.", "SecurePad Password Manager");
             _location = saveDialog.FileName;
-            _current = new Package(password, App.Settings.Seed)
+            _current = new Package
             {
+                Password = password,
+                Seed = App.Settings.Seed,
                 Content = Document.Text
             };
             _current.Save(_location);
