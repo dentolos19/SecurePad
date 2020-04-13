@@ -16,7 +16,7 @@
             </DockPanel>
             <DockPanel Margin="10,0,10,10">
                 <Label Content="Version" VerticalContentAlignment="Center" Width="75"/>
-                <TextBox Text="1.1.0 (Released on 4/12/2020)" VerticalContentAlignment="Center" IsReadOnly="True"/>
+                <TextBox Text="1.1.1 (Released on 4/13/2020)" VerticalContentAlignment="Center" IsReadOnly="True"/>
             </DockPanel>
         </StackPanel>
     </DockPanel>

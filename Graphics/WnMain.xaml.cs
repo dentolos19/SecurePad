@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
@@ -254,9 +255,15 @@ namespace SecurePad.Graphics
         private async void SwitchThemeMode(object sender, RoutedEventArgs e)
         {
             if (App.Settings.IsDarkMode)
+            {
                 App.Settings.IsDarkMode = false;
+                MenuThemeSwitchItem.Header = "Switch To Dark Mode";
+            }
             else
+            {
                 App.Settings.IsDarkMode = true;
+                MenuThemeSwitchItem.Header = "Switch To Light Mode";
+            }
             App.Settings.Save();
             var result = await this.ShowMessageAsync("SecurePad Theme Manager", "Do you want to restart to take effect?", MessageDialogStyle.AffirmativeAndNegative, new MetroDialogSettings
             {
@@ -281,6 +288,38 @@ namespace SecurePad.Graphics
                 return;
             }
             Utilities.Restart("\"" + _location + "\" \"" + _current.Password + "\"");
+        }
+
+        private async void SwitchAccentStyle(object sender, EventArgs e)
+        {
+            if (MenuAccentComboBox.Text != App.Settings.Accent)
+            {
+                App.Settings.Accent = MenuAccentComboBox.Text;
+                App.Settings.Save();
+                var result = await this.ShowMessageAsync("SecurePad Theme Manager", "Do you want to restart to take effect?", MessageDialogStyle.AffirmativeAndNegative, new MetroDialogSettings
+                {
+                    AffirmativeButtonText = "Yes",
+                    NegativeButtonText = "No"
+                });
+                if (result != MessageDialogResult.Affirmative)
+                    return;
+                if (string.IsNullOrEmpty(_location) || Document.IsModified)
+                {
+                    var answer = await this.ShowMessageAsync("SecurePad File Safety", "You have unsaved work, would you like to save the current one?", MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, new MetroDialogSettings
+                    {
+                        AffirmativeButtonText = "Yes",
+                        NegativeButtonText = "No",
+                        FirstAuxiliaryButtonText = "Cancel"
+                    });
+                    if (answer == MessageDialogResult.FirstAuxiliary)
+                        return;
+                    if (answer == MessageDialogResult.Affirmative)
+                        Save(null, null);
+                    Utilities.Restart();
+                    return;
+                }
+                Utilities.Restart("\"" + _location + "\" \"" + _current.Password + "\"");
+            }
         }
 
     }
