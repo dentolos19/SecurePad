@@ -263,14 +263,24 @@ namespace SecurePad.Graphics
                 AffirmativeButtonText = "Yes",
                 NegativeButtonText = "No"
             });
-            if (result == MessageDialogResult.Affirmative)
+            if (result != MessageDialogResult.Affirmative)
+                return;
+            if (string.IsNullOrEmpty(_location) || Document.IsModified)
             {
-                if (string.IsNullOrEmpty(_location))
-                    Utilities.Restart();
-                else
-                    Utilities.Restart("\"" + _location + "\" \"" + _current.Password + "\"");
+                var answer = await this.ShowMessageAsync("SecurePad File Safety", "You have unsaved work, would you like to save the current one?", MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, new MetroDialogSettings
+                {
+                    AffirmativeButtonText = "Yes",
+                    NegativeButtonText = "No",
+                    FirstAuxiliaryButtonText = "Cancel"
+                });
+                if (answer == MessageDialogResult.FirstAuxiliary)
+                    return;
+                if (answer == MessageDialogResult.Affirmative)
+                    Save(null, null);
+                Utilities.Restart();
+                return;
             }
-                
+            Utilities.Restart("\"" + _location + "\" \"" + _current.Password + "\"");
         }
 
     }
