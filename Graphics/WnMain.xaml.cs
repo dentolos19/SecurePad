@@ -175,7 +175,7 @@ namespace SecurePad.Graphics
 
         private async void UpdateSecuritySeed(object sender, RoutedEventArgs e)
         {
-            var seed = await this.ShowInputAsync("SecurePad Security Manager", "The file will only open if the password and the security seed are correct.\n\nChange this to add extra layer of protection.", new MetroDialogSettings()
+            var seed = await this.ShowInputAsync("SecurePad Security Manager", "The file will only open if the password and the security seed are correct.\n\nChange this to add extra layer of protection.", new MetroDialogSettings
             {
                 DefaultText = App.Settings.Seed
             });

@@ -18,10 +18,12 @@ namespace SecurePad.Core
 
         public void Save()
         {
+            var temp = Seed;
             Seed = Utilities.ToHexString(Seed);
             var stream = new StreamWriter(Source);
             Serializer.Serialize(stream, this);
             stream.Close();
+            Seed = temp;
         }
 
         public static Configuration Load()
