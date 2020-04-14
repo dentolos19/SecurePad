@@ -3,7 +3,7 @@
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
                      xmlns:mahApps="http://metro.mahapps.com/winfx/xaml/controls"
-                     Title="SecurePad" Closing="CheckUnsaved" TitleCharacterCasing="Normal">
+                     Title="SecurePad" Closing="CheckUnsaved" TitleCharacterCasing="Normal" Loaded="InitializePreLoaded">
     <Window.CommandBindings>
         <CommandBinding Command="New" Executed="New"/>
         <CommandBinding Command="Open" Executed="Open"/>

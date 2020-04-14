@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
 using MahApps.Metro.Controls.Dialogs;
-using Microsoft.VisualBasic;
 using Microsoft.Win32;
 using SecurePad.Core;
 using SecurePad.Core.Models;
@@ -16,7 +15,12 @@ namespace SecurePad.Graphics
     {
 
         private Package _current;
+
         private string _location;
+
+        private readonly string _prelocation;
+
+        private string _prepassword;
 
         public WnMain(string location = null, string password = null)
         {
@@ -31,15 +35,23 @@ namespace SecurePad.Graphics
                 MenuThemeSwitchItem.Header += "Dark Mode";
             }
             MenuAccentComboBox.Text = App.Settings.Accent;
-            if (string.IsNullOrEmpty(location))
+            if (!string.IsNullOrEmpty(location))
+                _prelocation = location;
+            if (!string.IsNullOrEmpty(password))
+                _prepassword = password;
+        }
+
+        private async void InitializePreLoaded(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(_prelocation))
                 return;
-            var document = Package.Load(location);
-            if (string.IsNullOrEmpty(password))
-                password = Interaction.InputBox("Enter the password for this document.", "SecurePad Password Manager");
-            if (document.Verify(password, App.Settings.Seed))
+            var document = Package.Load(_prelocation);
+            if (string.IsNullOrEmpty(_prepassword))
+                _prepassword = await this.ShowInputAsync("SecurePad Password Manager", "Enter the password for this document.");
+            if (document.Verify(_prepassword, App.Settings.Seed))
             {
                 _current = document;
-                _location = location;
+                _location = _prelocation;
                 Document.Text = _current.Content;
                 Document.IsModified = false;
             }
@@ -116,9 +128,12 @@ namespace SecurePad.Graphics
             };
             if (saveDialog.ShowDialog() == false)
                 return;
+            var currentPassword = string.Empty;
+            if (_current != null)
+                currentPassword = _current.Password;
             var password = await this.ShowInputAsync("SecurePad Password Manager", "Enter a new password for this document.", new MetroDialogSettings
             {
-                DefaultText = _current.Password
+                DefaultText = currentPassword
             });
             _location = saveDialog.FileName;
             _current = new Package
@@ -187,7 +202,9 @@ namespace SecurePad.Graphics
 
         private void OpenAbout(object sender, RoutedEventArgs e)
         {
-            new WnAbout().ShowDialog();
+            if (App.WindowAbout == null)
+                App.WindowAbout = new WnAbout();
+            App.WindowAbout.Show();
         }
 
         private async void FileDrop(object sender, DragEventArgs e)
