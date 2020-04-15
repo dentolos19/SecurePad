@@ -14,7 +14,7 @@ namespace SecurePad.Core
 
         public bool IsDarkMode = true;
         public string Accent = "Cobalt";
-        public string Seed = "S3CUR3P4D";
+        public string Seed = Utilities.GetUniqueCode();
 
         public void Save()
         {

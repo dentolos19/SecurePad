@@ -45,6 +45,13 @@ namespace SecurePad.Core
             return Encoding.Unicode.GetString(bytes);
         }
 
+        public static string GetUniqueCode()
+        {
+            var raw = $"{Environment.MachineName}-{Environment.UserName}";
+            var code = ToHexString(raw);
+            return $"S3CUR3P4D-{code}";
+        }
+
         public static void Restart(string args = null)
         {
             if (string.IsNullOrEmpty(args))

@@ -33,7 +33,6 @@ namespace SecurePad
                 WindowMain = new WnMain(e.Args[0]);
             else
                 WindowMain = new WnMain();
-            WindowAbout = new WnAbout();
             WindowMain.Show();
         }
 
