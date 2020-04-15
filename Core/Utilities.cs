@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
 
@@ -23,7 +25,8 @@ namespace SecurePad.Core
         public static bool IsUpdateAvailable()
         {
             var client = new WebClient();
-            var data = client.DownloadString("https://raw.githubusercontent.com/dentolos19/SecurePad/master/VERSION");
+            var data =
+                client.DownloadString("https://raw.githubusercontent.com/dentolos19/SecurePad/master/VERSION");
             client.Dispose();
             return Version.Parse(data) < Assembly.GetExecutingAssembly().GetName().Version;
         }
@@ -45,11 +48,12 @@ namespace SecurePad.Core
             return Encoding.Unicode.GetString(bytes);
         }
 
-        public static string GetUniqueCode()
+        public static string GetUniqueCode(string custom = null)
         {
             var raw = $"{Environment.MachineName}-{Environment.UserName}";
-            var code = ToHexString(raw);
-            return $"S3CUR3P4D-{code}";
+            if (!string.IsNullOrEmpty(custom))
+                raw = custom;
+            return ToHexString(raw);
         }
 
         public static void Restart(string args = null)
@@ -66,6 +70,32 @@ namespace SecurePad.Core
             };
             task.Start();
             Application.Current.Shutdown();
+        }
+
+        public static string Encrypt(string data, string key)
+        {
+            using var aes = Aes.Create();
+            aes.Key = Encoding.UTF8.GetBytes(key);
+            aes.IV = new byte[16];
+            var encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
+            using var ms = new MemoryStream();
+            using var cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write);
+            using (var writer = new StreamWriter(cs))
+                writer.Write(data);
+            return Convert.ToBase64String(ms.ToArray());
+        }
+
+        public static string Decrypt(string data, string key)
+        {
+            var bytes = Convert.FromBase64String(data);
+            using var aes = Aes.Create();
+            aes.Key = Encoding.UTF8.GetBytes(key);
+            aes.IV = new byte[16];
+            var decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
+            using var ms = new MemoryStream(bytes);
+            using var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read);
+            using var reader = new StreamReader(cs);
+            return reader.ReadToEnd();
         }
 
     }

@@ -24,12 +24,18 @@ namespace SecurePad.Core.Models
 
         public void Save(string output)
         {
+            var tmpSeed = Seed;
+            var tmpPassword = Password;
+            var tmpContent = Content;
             Seed = Utilities.ToHexString(Seed);
             Password = Utilities.ToHexString(Password);
             Content = Utilities.ToHexString(Content);
             var stream = new StreamWriter(output);
             Serializer.Serialize(stream, this);
             stream.Close();
+            Seed = tmpSeed;
+            Password = tmpPassword;
+            Content = tmpContent;
         }
 
         public static Package Load(string input)
