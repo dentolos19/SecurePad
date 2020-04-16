@@ -29,7 +29,7 @@ namespace SecurePad.Core.Models
             var tmpContent = Content;
             Seed = Utilities.ToHexString(Seed);
             Password = Utilities.ToHexString(Password);
-            Content = Utilities.ToHexString(Content);
+            Content = Utilities.Encrypt(Content, Utilities.GetUniqueCode($"{tmpSeed}+{tmpPassword}"));
             var stream = new StreamWriter(output);
             Serializer.Serialize(stream, this);
             stream.Close();
@@ -45,7 +45,7 @@ namespace SecurePad.Core.Models
             stream.Close();
             output.Seed = Utilities.FromHexString(output.Seed);
             output.Password = Utilities.FromHexString(output.Password);
-            output.Content = Utilities.FromHexString(output.Content);
+            output.Content = Utilities.Decrypt(output.Content, Utilities.GetUniqueCode($"{output.Seed}+{output.Password}"));
             return output;
         }
 

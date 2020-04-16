@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -72,30 +71,56 @@ namespace SecurePad.Core
             Application.Current.Shutdown();
         }
 
-        public static string Encrypt(string data, string key)
+        public static string Encrypt(string data, string key, bool hashing = true)
         {
-            using var aes = Aes.Create();
-            aes.Key = Encoding.UTF8.GetBytes(key);
-            aes.IV = new byte[16];
-            var encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
-            using var ms = new MemoryStream();
-            using var cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write);
-            using (var writer = new StreamWriter(cs))
-                writer.Write(data);
-            return Convert.ToBase64String(ms.ToArray());
+            byte[] bytes;
+            var buffer = Encoding.UTF8.GetBytes(data);
+            if (hashing)
+            {
+                var md5 = new MD5CryptoServiceProvider();
+                bytes = md5.ComputeHash(Encoding.UTF8.GetBytes(key));
+                md5.Clear();
+            }
+            else
+            {
+                bytes = Encoding.UTF8.GetBytes(key);
+            }
+            var provider = new TripleDESCryptoServiceProvider
+            {
+                Key = bytes,
+                Mode = CipherMode.ECB,
+                Padding = PaddingMode.PKCS7
+            };
+            var transform = provider.CreateEncryptor();
+            var result = transform.TransformFinalBlock(buffer, 0, buffer.Length);
+            provider.Clear();
+            return Convert.ToBase64String(result, 0, result.Length);
         }
 
-        public static string Decrypt(string data, string key)
+        public static string Decrypt(string data, string key, bool hashing = true)
         {
-            var bytes = Convert.FromBase64String(data);
-            using var aes = Aes.Create();
-            aes.Key = Encoding.UTF8.GetBytes(key);
-            aes.IV = new byte[16];
-            var decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
-            using var ms = new MemoryStream(bytes);
-            using var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read);
-            using var reader = new StreamReader(cs);
-            return reader.ReadToEnd();
+            byte[] bytes;
+            var buffer = Convert.FromBase64String(data);
+            if (hashing)
+            {
+                var md5 = new MD5CryptoServiceProvider();
+                bytes = md5.ComputeHash(Encoding.UTF8.GetBytes(key));
+                md5.Clear();
+            }
+            else
+            {
+                bytes = Encoding.UTF8.GetBytes(key);
+            }
+            var provider = new TripleDESCryptoServiceProvider
+            {
+                Key = bytes,
+                Mode = CipherMode.ECB,
+                Padding = PaddingMode.PKCS7
+            };
+            var transform = provider.CreateDecryptor();
+            var result = transform.TransformFinalBlock(buffer, 0, buffer.Length);
+            provider.Clear();
+            return Encoding.UTF8.GetString(result);
         }
 
     }
