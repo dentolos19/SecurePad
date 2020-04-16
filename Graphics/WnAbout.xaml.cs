@@ -16,7 +16,7 @@ namespace SecurePad.Graphics
 
         private void Exit(object sender, RoutedEventArgs e)
         {
-            Hide();
+            Close();
         }
 
     }

@@ -63,18 +63,19 @@ namespace SecurePad.Graphics
 
         private async void New(object sender, RoutedEventArgs e)
         {
-            if (!Document.IsModified)
-                return;
-            var result = await this.ShowMessageAsync("SecurePad File Safety", "You have unsaved work, would you like to save the current one?", MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, new MetroDialogSettings
+            if (Document.IsModified)
             {
-                AffirmativeButtonText = "Yes",
-                NegativeButtonText = "No",
-                FirstAuxiliaryButtonText = "Cancel"
-            });
-            if (result == MessageDialogResult.FirstAuxiliary)
-                return;
-            if (result == MessageDialogResult.Affirmative)
-                Save(null, null);
+                var result = await this.ShowMessageAsync("SecurePad File Safety", "You have unsaved work, would you like to save the current one?", MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, new MetroDialogSettings
+                {
+                    AffirmativeButtonText = "Yes",
+                    NegativeButtonText = "No",
+                    FirstAuxiliaryButtonText = "Cancel"
+                });
+                if (result == MessageDialogResult.FirstAuxiliary)
+                    return;
+                if (result == MessageDialogResult.Affirmative)
+                    Save(null, null);
+            }
             _current = null;
             _location = string.Empty;
             Document.Text = string.Empty;
@@ -202,9 +203,7 @@ namespace SecurePad.Graphics
 
         private void OpenAbout(object sender, RoutedEventArgs e)
         {
-            if (App.WindowAbout == null)
-                App.WindowAbout = new WnAbout();
-            App.WindowAbout.Show();
+            new WnAbout().Show();
         }
 
         private async void FileDrop(object sender, DragEventArgs e)

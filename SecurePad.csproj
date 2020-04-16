@@ -12,7 +12,7 @@
     <DelaySign></DelaySign>
     <AssemblyOriginatorKeyFile>Properties\AssemblyKey.snk</AssemblyOriginatorKeyFile>
     <StartupObject>SecurePad.App</StartupObject>
-    <ApplicationIcon>Icon.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\Icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -29,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Icon.ico" />
+    <Resource Include="Resources\Icon.ico" />
   </ItemGroup>
 
 </Project>
