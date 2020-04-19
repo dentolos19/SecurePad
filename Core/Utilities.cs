@@ -49,10 +49,10 @@ namespace SecurePad.Core
 
         public static string GetUniqueCode(string custom = null)
         {
-            var raw = $"{Environment.MachineName}-{Environment.UserName}";
+            var Raw = $"{Environment.MachineName}-{Environment.UserName}";
             if (!string.IsNullOrEmpty(custom))
-                raw = custom;
-            return ToHexString(raw);
+                Raw = custom;
+            return ToHexString(Raw);
         }
 
         public static void Restart(string args = null)
