@@ -27,7 +27,7 @@ namespace SecurePad.Core
             var data =
                 client.DownloadString("https://raw.githubusercontent.com/dentolos19/SecurePad/master/VERSION");
             client.Dispose();
-            return Version.Parse(data) < Assembly.GetExecutingAssembly().GetName().Version;
+            return Version.Parse(data) > Assembly.GetExecutingAssembly().GetName().Version;
         }
 
         public static string ToHexString(string data)
@@ -49,10 +49,10 @@ namespace SecurePad.Core
 
         public static string GetUniqueCode(string custom = null)
         {
-            var Raw = $"{Environment.MachineName}-{Environment.UserName}";
+            var raw = $"{Environment.MachineName}-{Environment.UserName}";
             if (!string.IsNullOrEmpty(custom))
-                Raw = custom;
-            return ToHexString(Raw);
+                raw = custom;
+            return ToHexString(raw);
         }
 
         public static void Restart(string args = null)
