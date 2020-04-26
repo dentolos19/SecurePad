@@ -2,7 +2,8 @@
                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:mahApps="http://metro.mahapps.com/winfx/xaml/controls"
-                     Title="About SecurePad" Width="500" SizeToContent="Height" ResizeMode="NoResize" TitleCharacterCasing="Normal">
+                     Title="About SecurePad" Width="500" SizeToContent="Height" ResizeMode="NoResize"
+                     TitleCharacterCasing="Normal">
     <DockPanel>
         <DockPanel x:Name="TopPanel" DockPanel.Dock="Top" Height="50" Background="WhiteSmoke">
             <Image Source="/Resources/Icon.ico" Margin="10,10,10,10" Width="30" />
@@ -12,7 +13,8 @@
         <StackPanel>
             <DockPanel Margin="10,10,10,10">
                 <Label Content="Creator" VerticalContentAlignment="Center" Width="75" />
-                <TextBox Text="Dennise (Find me on GitHub, @dentolos19)" VerticalContentAlignment="Center" IsReadOnly="True" />
+                <TextBox Text="Dennise (Find me on GitHub, @dentolos19)" VerticalContentAlignment="Center"
+                         IsReadOnly="True" />
             </DockPanel>
             <DockPanel Margin="10,0,10,10">
                 <Label Content="Version" VerticalContentAlignment="Center" Width="75" />

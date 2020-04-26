@@ -6,13 +6,14 @@
     <UseWPF>true</UseWPF>
     <Authors>Dennise</Authors>
     <Copyright>Copyright © 2020</Copyright>
-    <Version>1.1.2</Version>
+    <Version>1.1.4</Version>
     <NeutralLanguage>en</NeutralLanguage>
     <SignAssembly>true</SignAssembly>
     <DelaySign></DelaySign>
     <AssemblyOriginatorKeyFile>Properties\AssemblyKey.snk</AssemblyOriginatorKeyFile>
     <StartupObject>SecurePad.App</StartupObject>
     <ApplicationIcon>Resources\Icon.ico</ApplicationIcon>
+    <Company>Aprodots</Company>
   </PropertyGroup>
 
   <ItemGroup>

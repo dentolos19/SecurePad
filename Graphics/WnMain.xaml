@@ -3,7 +3,8 @@
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
                      xmlns:mahApps="http://metro.mahapps.com/winfx/xaml/controls"
-                     Title="SecurePad" Closing="CheckUnsaved" TitleCharacterCasing="Normal" Loaded="InitializePreLoaded">
+                     Title="SecurePad" Closing="CheckUnsaved" TitleCharacterCasing="Normal"
+                     Loaded="InitializePreLoaded">
     <Window.CommandBindings>
         <CommandBinding Command="New" Executed="New" />
         <CommandBinding Command="Open" Executed="Open" />
@@ -73,6 +74,7 @@
                 <MenuItem Header="About SecurePad" Click="OpenAbout" />
             </MenuItem>
         </Menu>
-        <avalonEdit:TextEditor x:Name="Document" ShowLineNumbers="True" FontFamily="Consolas" AllowDrop="True" Drop="FileDrop" FontSize="16" />
+        <avalonEdit:TextEditor x:Name="Document" ShowLineNumbers="True" FontFamily="Consolas" AllowDrop="True"
+                               Drop="FileDrop" FontSize="16" />
     </DockPanel>
 </mahApps:MetroWindow>

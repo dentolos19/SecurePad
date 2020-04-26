@@ -24,8 +24,7 @@ namespace SecurePad.Core
         public static bool IsUpdateAvailable()
         {
             var client = new WebClient();
-            var data =
-                client.DownloadString("https://raw.githubusercontent.com/dentolos19/SecurePad/master/VERSION");
+            var data = client.DownloadString("https://raw.githubusercontent.com/dentolos19/SecurePad/master/VERSION");
             client.Dispose();
             return Version.Parse(data) > Assembly.GetExecutingAssembly().GetName().Version;
         }
@@ -59,14 +58,7 @@ namespace SecurePad.Core
         {
             if (string.IsNullOrEmpty(args))
                 args = string.Empty;
-            var task = new Process
-            {
-                StartInfo =
-                {
-                    FileName = Assembly.GetExecutingAssembly().Location,
-                    Arguments = args
-                }
-            };
+            var task = new Process { StartInfo = { FileName = Assembly.GetExecutingAssembly().Location, Arguments = args } };
             task.Start();
             Application.Current.Shutdown();
         }
@@ -81,16 +73,8 @@ namespace SecurePad.Core
                 bytes = md5.ComputeHash(Encoding.UTF8.GetBytes(key));
                 md5.Clear();
             }
-            else
-            {
-                bytes = Encoding.UTF8.GetBytes(key);
-            }
-            var provider = new TripleDESCryptoServiceProvider
-            {
-                Key = bytes,
-                Mode = CipherMode.ECB,
-                Padding = PaddingMode.PKCS7
-            };
+            else { bytes = Encoding.UTF8.GetBytes(key); }
+            var provider = new TripleDESCryptoServiceProvider { Key = bytes, Mode = CipherMode.ECB, Padding = PaddingMode.PKCS7 };
             var transform = provider.CreateEncryptor();
             var result = transform.TransformFinalBlock(buffer, 0, buffer.Length);
             provider.Clear();
@@ -107,16 +91,8 @@ namespace SecurePad.Core
                 bytes = md5.ComputeHash(Encoding.UTF8.GetBytes(key));
                 md5.Clear();
             }
-            else
-            {
-                bytes = Encoding.UTF8.GetBytes(key);
-            }
-            var provider = new TripleDESCryptoServiceProvider
-            {
-                Key = bytes,
-                Mode = CipherMode.ECB,
-                Padding = PaddingMode.PKCS7
-            };
+            else { bytes = Encoding.UTF8.GetBytes(key); }
+            var provider = new TripleDESCryptoServiceProvider { Key = bytes, Mode = CipherMode.ECB, Padding = PaddingMode.PKCS7 };
             var transform = provider.CreateDecryptor();
             var result = transform.TransformFinalBlock(buffer, 0, buffer.Length);
             provider.Clear();
