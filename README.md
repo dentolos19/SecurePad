@@ -1,3 +1,1 @@
-# SecurePad
-
-This program encrypts your files so people wouldn’t just read it, it protects a file with a password and a master key and encrypt both strings with another encryption type. To learn more about this project, click to the link above.
+# SecurePad [![Quality](https://app.codacy.com/project/badge/Grade/7fdc853e58a5469db1a6a5b8e914faf4)](https://www.codacy.com/manual/dentolos19/SecurePad?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dentolos19/SecurePad&amp;utm_campaign=Badge_Grade)
