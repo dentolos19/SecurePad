@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <UseWPF>true</UseWPF>
     <Authors>Dennise Catolos</Authors>
     <Copyright>Copyright © 2020</Copyright>
@@ -16,14 +16,7 @@
     <Company>Aprodots</Company>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Properties\PublishProfiles\**" />
-    <EmbeddedResource Remove="Properties\PublishProfiles\**" />
-    <None Remove="Properties\PublishProfiles\**" />
-    <Page Remove="Properties\PublishProfiles\**" />
-  </ItemGroup>
-
-  <ItemGroup>
+	<ItemGroup>
     <None Remove=".gitattributes" />
     <None Remove=".gitignore" />
     <None Remove="Icon.ico" />
@@ -34,7 +27,7 @@
 
   <ItemGroup>
     <PackageReference Include="AvalonEdit" Version="6.0.1" />
-    <PackageReference Include="MahApps.Metro" Version="2.0.0-alpha0748" />
+    <PackageReference Include="MahApps.Metro" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
