@@ -6,7 +6,7 @@
     <UseWPF>true</UseWPF>
     <Authors>Dennise Catolos</Authors>
     <Copyright>Copyright © 2020</Copyright>
-    <Version>1.1.4</Version>
+    <Version>1.1.5</Version>
     <NeutralLanguage>en</NeutralLanguage>
     <SignAssembly>true</SignAssembly>
     <DelaySign></DelaySign>
@@ -22,6 +22,7 @@
     <None Remove="Icon.ico" />
     <None Remove="LICENSE" />
     <None Remove="README.md" />
+    <None Remove="Resources\Logo.png" />
     <None Remove="VERSION" />
   </ItemGroup>
 
@@ -32,6 +33,7 @@
 
   <ItemGroup>
     <Resource Include="Resources\Icon.ico" />
+    <Resource Include="Resources\Logo.png" />
   </ItemGroup>
 
 </Project>

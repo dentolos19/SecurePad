@@ -5,7 +5,6 @@ using System.Xml.Serialization;
 namespace SecurePad.Core
 {
 
-    [Serializable]
     public class Configuration
     {
 
@@ -34,6 +33,8 @@ namespace SecurePad.Core
             var stream = new StreamReader(Source);
             result = Serializer.Deserialize(stream) as Configuration;
             stream.Close();
+            if (result == null)
+                return null;
             result.Seed = Utilities.FromHexString(result.Seed);
             return result;
         }

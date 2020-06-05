@@ -6,75 +6,74 @@
                      Title="SecurePad" Closing="CheckUnsaved" TitleCharacterCasing="Normal"
                      Loaded="InitializePreLoaded">
     <Window.CommandBindings>
-        <CommandBinding Command="New" Executed="New" />
-        <CommandBinding Command="Open" Executed="Open" />
-        <CommandBinding Command="Save" Executed="Save" />
-        <CommandBinding Command="SaveAs" Executed="SaveAs" />
+        <CommandBinding Command="New" Executed="New"/>
+        <CommandBinding Command="Open" Executed="Open"/>
+        <CommandBinding Command="Save" Executed="Save"/>
+        <CommandBinding Command="SaveAs" Executed="SaveAs"/>
     </Window.CommandBindings>
     <Window.InputBindings>
-        <KeyBinding Key="N" Modifiers="Control" Command="New" />
-        <KeyBinding Key="O" Modifiers="Control" Command="Open" />
-        <KeyBinding Key="S" Modifiers="Control" Command="Save" />
-        <KeyBinding Key="S" Modifiers="Control+Shift" Command="SaveAs" />
+        <KeyBinding Key="N" Modifiers="Control" Command="New"/>
+        <KeyBinding Key="O" Modifiers="Control" Command="Open"/>
+        <KeyBinding Key="S" Modifiers="Control" Command="Save"/>
+        <KeyBinding Key="S" Modifiers="Control+Shift" Command="SaveAs"/>
     </Window.InputBindings>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
-                <MenuItem Header="New" Click="New" InputGestureText="Ctrl+N" />
-                <MenuItem Header="Open" Click="Open" InputGestureText="Ctrl+O" />
-                <Separator />
-                <MenuItem Header="Save" Click="Save" InputGestureText="Ctrl+S" />
-                <MenuItem Header="Save As" Click="SaveAs" InputGestureText="Ctrl+Shift+S" />
-                <Separator />
-                <MenuItem Header="Exit" Click="Exit" InputGestureText="Alt+F4" />
+                <MenuItem Header="New" Click="New" InputGestureText="Ctrl+N"/>
+                <MenuItem Header="Open" Click="Open" InputGestureText="Ctrl+O"/>
+                <Separator/>
+                <MenuItem Header="Save" Click="Save" InputGestureText="Ctrl+S"/>
+                <MenuItem Header="Save As" Click="SaveAs" InputGestureText="Ctrl+Shift+S"/>
+                <Separator/>
+                <MenuItem Header="Exit" Click="Exit" InputGestureText="Alt+F4"/>
             </MenuItem>
             <MenuItem Header="Edit">
-                <MenuItem Header="Undo" Click="Undo" InputGestureText="Ctrl+Z" />
-                <MenuItem Header="Redo" Click="Redo" InputGestureText="Ctrl+Y" />
-                <Separator />
-                <MenuItem Header="Cut" Click="Cut" InputGestureText="Ctrl+X" />
-                <MenuItem Header="Copy" Click="Copy" InputGestureText="Ctrl+C" />
-                <MenuItem Header="Paste" Click="Paste" InputGestureText="Ctrl+V" />
-                <MenuItem Header="Delete" Click="Delete" InputGestureText="Del" />
-                <Separator />
-                <MenuItem Header="Select All" Click="SelectAll" InputGestureText="Ctrl+A" />
+                <MenuItem Header="Undo" Click="Undo" InputGestureText="Ctrl+Z"/>
+                <MenuItem Header="Redo" Click="Redo" InputGestureText="Ctrl+Y"/>
+                <Separator/>
+                <MenuItem Header="Cut" Click="Cut" InputGestureText="Ctrl+X"/>
+                <MenuItem Header="Copy" Click="Copy" InputGestureText="Ctrl+C"/>
+                <MenuItem Header="Paste" Click="Paste" InputGestureText="Ctrl+V"/>
+                <MenuItem Header="Delete" Click="Delete" InputGestureText="Del"/>
+                <Separator/>
+                <MenuItem Header="Select All" Click="SelectAll" InputGestureText="Ctrl+A"/>
             </MenuItem>
             <MenuItem Header="Options">
                 <MenuItem Header="Change App Theme">
-                    <MenuItem x:Name="MenuThemeSwitchItem" Header="Switch To " Click="SwitchThemeMode" />
+                    <MenuItem x:Name="MenuThemeSwitchItem" Header="Switch To " Click="SwitchThemeMode"/>
                     <ComboBox x:Name="MenuAccentComboBox" DropDownClosed="SwitchAccentStyle">
-                        <ComboBoxItem Content="Red" />
-                        <ComboBoxItem Content="Green" />
-                        <ComboBoxItem Content="Blue" />
-                        <ComboBoxItem Content="Purple" />
-                        <ComboBoxItem Content="Orange" />
-                        <ComboBoxItem Content="Lime" />
-                        <ComboBoxItem Content="Emerald" />
-                        <ComboBoxItem Content="Teal" />
-                        <ComboBoxItem Content="Cyan" />
-                        <ComboBoxItem Content="Cobalt" />
-                        <ComboBoxItem Content="Indigo" />
-                        <ComboBoxItem Content="Violet" />
-                        <ComboBoxItem Content="Pink" />
-                        <ComboBoxItem Content="Magenta" />
-                        <ComboBoxItem Content="Crimson" />
-                        <ComboBoxItem Content="Amber" />
-                        <ComboBoxItem Content="Yellow" />
-                        <ComboBoxItem Content="Brown" />
-                        <ComboBoxItem Content="Olive" />
-                        <ComboBoxItem Content="Steel" />
-                        <ComboBoxItem Content="Mauve" />
-                        <ComboBoxItem Content="Taupe" />
-                        <ComboBoxItem Content="Sienna" />
+                        <ComboBoxItem Content="Red"/>
+                        <ComboBoxItem Content="Green"/>
+                        <ComboBoxItem Content="Blue"/>
+                        <ComboBoxItem Content="Purple"/>
+                        <ComboBoxItem Content="Orange"/>
+                        <ComboBoxItem Content="Lime"/>
+                        <ComboBoxItem Content="Emerald"/>
+                        <ComboBoxItem Content="Teal"/>
+                        <ComboBoxItem Content="Cyan"/>
+                        <ComboBoxItem Content="Cobalt"/>
+                        <ComboBoxItem Content="Indigo"/>
+                        <ComboBoxItem Content="Violet"/>
+                        <ComboBoxItem Content="Pink"/>
+                        <ComboBoxItem Content="Magenta"/>
+                        <ComboBoxItem Content="Crimson"/>
+                        <ComboBoxItem Content="Amber"/>
+                        <ComboBoxItem Content="Yellow"/>
+                        <ComboBoxItem Content="Brown"/>
+                        <ComboBoxItem Content="Olive"/>
+                        <ComboBoxItem Content="Steel"/>
+                        <ComboBoxItem Content="Mauve"/>
+                        <ComboBoxItem Content="Taupe"/>
+                        <ComboBoxItem Content="Sienna"/>
                     </ComboBox>
                 </MenuItem>
-                <MenuItem Header="Check For Updates" Click="CheckForUpdates" />
-                <MenuItem Header="Update Security Seed" Click="UpdateSecuritySeed" />
-                <Separator />
-                <MenuItem Header="About SecurePad" Click="OpenAbout" />
+                <MenuItem Header="Update Security Seed" Click="UpdateSecuritySeed"/>
+                <Separator/>
+                <MenuItem Header="About SecurePad" Click="OpenAbout"/>
             </MenuItem>
         </Menu>
         <avalonEdit:TextEditor x:Name="Document" ShowLineNumbers="True" FontFamily="Consolas" AllowDrop="True"
-                               Drop="FileDrop" FontSize="16" />
+                               Drop="FileDrop" FontSize="16"/>
     </DockPanel>
 </mahApps:MetroWindow>

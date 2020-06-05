@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
 using MahApps.Metro.Controls.Dialogs;
@@ -14,13 +13,13 @@ namespace SecurePad.Graphics
     public partial class WnMain
     {
 
-        private readonly string _prelocation;
+        private readonly string _preLocation;
 
-        private Package _current;
+        private SpDocument _current;
 
         private string _location;
 
-        private string _prepassword;
+        private string _prePassword;
 
         public WnMain(string location = null, string password = null)
         {
@@ -30,25 +29,28 @@ namespace SecurePad.Graphics
                 Document.Foreground = Brushes.White;
                 MenuThemeSwitchItem.Header += "Light Mode";
             }
-            else { MenuThemeSwitchItem.Header += "Dark Mode"; }
+            else
+            {
+                MenuThemeSwitchItem.Header += "Dark Mode";
+            }
             MenuAccentComboBox.Text = App.Settings.Accent;
             if (!string.IsNullOrEmpty(location))
-                _prelocation = location;
+                _preLocation = location;
             if (!string.IsNullOrEmpty(password))
-                _prepassword = password;
+                _prePassword = password;
         }
 
         private async void InitializePreLoaded(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(_prelocation))
+            if (string.IsNullOrEmpty(_preLocation))
                 return;
-            var document = Package.Load(_prelocation);
-            if (string.IsNullOrEmpty(_prepassword))
-                _prepassword = await this.ShowInputAsync("SecurePad Password Manager", "Enter the password for this document.");
-            if (document.Verify(_prepassword, App.Settings.Seed))
+            var document = SpDocument.Load(_preLocation);
+            if (string.IsNullOrEmpty(_prePassword))
+                _prePassword = await this.ShowInputAsync("SecurePad Password Manager", "Enter the password for this document.");
+            if (document.Verify(_prePassword, App.Settings.Seed))
             {
                 _current = document;
-                _location = _prelocation;
+                _location = _preLocation;
                 Document.Text = _current.Content;
                 Document.IsModified = false;
             }
@@ -62,7 +64,7 @@ namespace SecurePad.Graphics
         {
             if (Document.IsModified)
             {
-                var result = await this.ShowMessageAsync("SecurePad File Safety", "You have unsaved work, would you like to save the current one?", MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, new MetroDialogSettings { AffirmativeButtonText = "Yes", NegativeButtonText = "No", FirstAuxiliaryButtonText = "Cancel" });
+                var result = await this.ShowMessageAsync("SecurePad File Safety", "You have unsaved work, would you like to save the current one?", MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, new MetroDialogSettings {AffirmativeButtonText = "Yes", NegativeButtonText = "No", FirstAuxiliaryButtonText = "Cancel"});
                 if (result == MessageDialogResult.FirstAuxiliary)
                     return;
                 if (result == MessageDialogResult.Affirmative)
@@ -76,10 +78,10 @@ namespace SecurePad.Graphics
 
         private async void Open(object sender, RoutedEventArgs e)
         {
-            var openDialog = new OpenFileDialog { Title = "SecurePad File Opener", Filter = "SecurePad Encrypted File|*.spef" };
+            var openDialog = new OpenFileDialog {Title = "SecurePad File Opener", Filter = "SecurePad Encrypted File|*.spef"};
             if (openDialog.ShowDialog() == false)
                 return;
-            var document = Package.Load(openDialog.FileName);
+            var document = SpDocument.Load(openDialog.FileName);
             var password = await this.ShowInputAsync("SecurePad Password Manager", "Enter the password for this document.");
             if (document.Verify(password, App.Settings.Seed))
             {
@@ -110,15 +112,15 @@ namespace SecurePad.Graphics
 
         private async void SaveAs(object sender, RoutedEventArgs e)
         {
-            var saveDialog = new SaveFileDialog { Title = "SecurePad File Saver", Filter = "SecurePad Encrypted File|*.spef" };
+            var saveDialog = new SaveFileDialog {Title = "SecurePad File Saver", Filter = "SecurePad Encrypted File|*.spef"};
             if (saveDialog.ShowDialog() == false)
                 return;
             var currentPassword = string.Empty;
             if (_current != null)
                 currentPassword = _current.Password;
-            var password = await this.ShowInputAsync("SecurePad Password Manager", "Enter a new password for this document.", new MetroDialogSettings { DefaultText = currentPassword });
+            var password = await this.ShowInputAsync("SecurePad Password Manager", "Enter a new password for this document.", new MetroDialogSettings {DefaultText = currentPassword});
             _location = saveDialog.FileName;
-            _current = new Package { Password = password, Seed = App.Settings.Seed, Content = Document.Text };
+            _current = new SpDocument {Password = password, Seed = App.Settings.Seed, Content = Document.Text};
             _current.Save(_location);
             Document.IsModified = false;
         }
@@ -167,7 +169,7 @@ namespace SecurePad.Graphics
 
         private async void UpdateSecuritySeed(object sender, RoutedEventArgs e)
         {
-            var seed = await this.ShowInputAsync("SecurePad Security Manager", "The file will only open if the password and the security seed are correct.\n\nThis seed is generated uniquely for you, change this to update protection.", new MetroDialogSettings { DefaultText = App.Settings.Seed });
+            var seed = await this.ShowInputAsync("SecurePad Security Manager", "The file will only open if the password and the security seed are correct.\n\nThis seed is generated uniquely for you, change this to update protection.", new MetroDialogSettings {DefaultText = App.Settings.Seed});
             if (string.IsNullOrEmpty(seed) || seed == App.Settings.Seed)
                 return;
             App.Settings.Seed = seed;
@@ -185,7 +187,7 @@ namespace SecurePad.Graphics
                 return;
             if (e.Data.GetData(DataFormats.FileDrop) is string[] data && data.Length == 1)
             {
-                var document = Package.Load(data[0]);
+                var document = SpDocument.Load(data[0]);
                 var password = await this.ShowInputAsync("SecurePad Password Manager", "Enter the password for this document.");
                 if (document.Verify(password, App.Settings.Seed))
                 {
@@ -199,7 +201,10 @@ namespace SecurePad.Graphics
                     await this.ShowMessageAsync("SecurePad Password Manager", "Either password or security seed is wrong, access is denied!");
                 }
             }
-            else { await this.ShowMessageAsync("SecurePad File Dropper", "You can only drop one file at a time!"); }
+            else
+            {
+                await this.ShowMessageAsync("SecurePad File Dropper", "You can only drop one file at a time!");
+            }
         }
 
         private void CheckUnsaved(object sender, CancelEventArgs e)
@@ -211,27 +216,6 @@ namespace SecurePad.Graphics
                 e.Cancel = true;
             if (result == MessageBoxResult.Yes)
                 Save(null, null);
-        }
-
-        private async void CheckForUpdates(object sender, RoutedEventArgs e)
-        {
-            if (Utilities.IsUserOnline())
-            {
-                if (!Utilities.IsUpdateAvailable())
-                {
-                    var result = await this.ShowMessageAsync("SecurePad Update Checker", "Updates are available! Do you want to go visit the download page?", MessageDialogStyle.AffirmativeAndNegative, new MetroDialogSettings { AffirmativeButtonText = "Yes", NegativeButtonText = "No" });
-                    if (result == MessageDialogResult.Affirmative)
-                        Process.Start("https://github.com/dentolos19/SecurePad/releases");
-                }
-                else
-                {
-                    await this.ShowMessageAsync("SecurePad Update Checker", "No updates are available, keep doing your thing!");
-                }
-            }
-            else
-            {
-                await this.ShowMessageAsync("SecurePad Update Checker", "An internet connection is required to perform this operation!");
-            }
         }
 
         private async void SwitchThemeMode(object sender, RoutedEventArgs e)
@@ -247,12 +231,12 @@ namespace SecurePad.Graphics
                 MenuThemeSwitchItem.Header = "Switch To Light Mode";
             }
             App.Settings.Save();
-            var result = await this.ShowMessageAsync("SecurePad Theme Manager", "Do you want to restart to take effect?", MessageDialogStyle.AffirmativeAndNegative, new MetroDialogSettings { AffirmativeButtonText = "Yes", NegativeButtonText = "No" });
+            var result = await this.ShowMessageAsync("SecurePad Theme Manager", "Do you want to restart to take effect?", MessageDialogStyle.AffirmativeAndNegative, new MetroDialogSettings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"});
             if (result != MessageDialogResult.Affirmative)
                 return;
             if (string.IsNullOrEmpty(_location) || Document.IsModified)
             {
-                var answer = await this.ShowMessageAsync("SecurePad File Safety", "You have unsaved work, would you like to save the current one?", MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, new MetroDialogSettings { AffirmativeButtonText = "Yes", NegativeButtonText = "No", FirstAuxiliaryButtonText = "Cancel" });
+                var answer = await this.ShowMessageAsync("SecurePad File Safety", "You have unsaved work, would you like to save the current one?", MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, new MetroDialogSettings {AffirmativeButtonText = "Yes", NegativeButtonText = "No", FirstAuxiliaryButtonText = "Cancel"});
                 if (answer == MessageDialogResult.FirstAuxiliary)
                     return;
 
@@ -271,12 +255,12 @@ namespace SecurePad.Graphics
             {
                 App.Settings.Accent = MenuAccentComboBox.Text;
                 App.Settings.Save();
-                var result = await this.ShowMessageAsync("SecurePad Theme Manager", "Do you want to restart to take effect?", MessageDialogStyle.AffirmativeAndNegative, new MetroDialogSettings { AffirmativeButtonText = "Yes", NegativeButtonText = "No" });
+                var result = await this.ShowMessageAsync("SecurePad Theme Manager", "Do you want to restart to take effect?", MessageDialogStyle.AffirmativeAndNegative, new MetroDialogSettings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"});
                 if (result != MessageDialogResult.Affirmative)
                     return;
                 if (string.IsNullOrEmpty(_location) || Document.IsModified)
                 {
-                    var answer = await this.ShowMessageAsync("SecurePad File Safety", "You have unsaved work, would you like to save the current one?", MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, new MetroDialogSettings { AffirmativeButtonText = "Yes", NegativeButtonText = "No", FirstAuxiliaryButtonText = "Cancel" });
+                    var answer = await this.ShowMessageAsync("SecurePad File Safety", "You have unsaved work, would you like to save the current one?", MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, new MetroDialogSettings {AffirmativeButtonText = "Yes", NegativeButtonText = "No", FirstAuxiliaryButtonText = "Cancel"});
                     if (answer == MessageDialogResult.FirstAuxiliary)
                         return;
                     if (answer == MessageDialogResult.Affirmative)

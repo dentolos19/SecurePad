@@ -20,7 +20,7 @@ namespace SecurePad
             var uri = $"pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.{Settings.Accent}.xaml";
             if (Settings.IsDarkMode)
                 uri = $"pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.{Settings.Accent}.xaml";
-            var theme = new ResourceDictionary { Source = new Uri(uri) };
+            var theme = new ResourceDictionary {Source = new Uri(uri)};
             Current.Resources.MergedDictionaries.Add(theme);
             switch (e.Args.Length)
             {
@@ -41,7 +41,7 @@ namespace SecurePad
         {
             if (_windowMain.IsLoaded)
             {
-                var result = await _windowMain.ShowMessageAsync("SecurePad Code Handler", "Internal code error detected, do you want to continue using SecurePad?", MessageDialogStyle.AffirmativeAndNegative, new MetroDialogSettings { AffirmativeButtonText = "Yes", NegativeButtonText = "No" });
+                var result = await _windowMain.ShowMessageAsync("SecurePad Code Handler", "Internal code error detected, do you want to continue using SecurePad?", MessageDialogStyle.AffirmativeAndNegative, new MetroDialogSettings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"});
                 if (result == MessageDialogResult.Affirmative)
                     e.Handled = true;
             }

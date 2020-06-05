@@ -6,10 +6,10 @@ namespace SecurePad.Core.Models
 {
 
     [Serializable]
-    public class Package
+    public class SpDocument
     {
 
-        private static readonly XmlSerializer Serializer = new XmlSerializer(typeof(Package));
+        private static readonly XmlSerializer Serializer = new XmlSerializer(typeof(SpDocument));
 
         public string Password { get; set; }
 
@@ -38,10 +38,10 @@ namespace SecurePad.Core.Models
             Content = tmpContent;
         }
 
-        public static Package Load(string input)
+        public static SpDocument Load(string input)
         {
             var stream = new StreamReader(input);
-            var output = Serializer.Deserialize(stream) as Package;
+            var output = Serializer.Deserialize(stream) as SpDocument;
             stream.Close();
             output.Seed = Utilities.FromHexString(output.Seed);
             output.Password = Utilities.FromHexString(output.Password);
