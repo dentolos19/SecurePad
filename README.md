@@ -2,4 +2,4 @@
 
 A simple text editor with high-level encryption, but don't guarantee that this will fully-protect your files! I made this project because of my personal hobby of creating replica of other programs and improving them from scratch! I won't be maintaining this project unless I need to fix something, but any contributions to this project will be helpful thanks!
 
-![Preview](https://dentolos19.github.io/preview/securepad.png)
+![Preview](https://dentolos19.github.io/previews/securepad.png)
