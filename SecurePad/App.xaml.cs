@@ -14,7 +14,7 @@ namespace SecurePad
         {
             Settings = Configuration.Load();
             Utilities.SetAppTheme(Settings.ThemeAccent, Settings.EnableDarkMode);
-            (args.Args.Length > 0 ? new WnMain(args.Args) : new WnMain()).Show();
+            (args.Args.Length == 1 ? new WnMain(args.Args[0]) : new WnMain()).Show();
         }
 
     }

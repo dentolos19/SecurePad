@@ -3,39 +3,39 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mahApps="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
-        Title="SecurePad" SaveWindowPosition="True" Loaded="LoadFileArgs" Closing="ClickUnsaved">
+        Title="SecurePad" TitleCharacterCasing="Normal" SaveWindowPosition="True" Loaded="LoadFileArgs" Closing="ClickUnsaved">
     <Window.CommandBindings>
-        <CommandBinding Command="New" Executed="New"/>
-        <CommandBinding Command="Open" Executed="Open"/>
-        <CommandBinding Command="Save" Executed="Save"/>
-        <CommandBinding Command="SaveAs" Executed="SaveAs"/>
+        <CommandBinding Command="New" Executed="NewFile"/>
+        <CommandBinding Command="Open" Executed="OpenFile"/>
+        <CommandBinding Command="Save" Executed="SaveFile"/>
+        <CommandBinding Command="SaveAs" Executed="SaveFileAs"/>
     </Window.CommandBindings>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
-                <MenuItem Header="New" InputGestureText="Ctrl+N" Click="New"/>
-                <MenuItem Header="Open" InputGestureText="Ctrl+O" Click="Open"/>
+                <MenuItem Header="New" InputGestureText="Ctrl+N" Click="NewFile"/>
+                <MenuItem Header="Open" InputGestureText="Ctrl+O" Click="OpenFile"/>
                 <Separator/>
-                <MenuItem Header="Save" InputGestureText="Ctrl+S" Click="Save"/>
-                <MenuItem Header="Save As" InputGestureText="Ctrl+Shift+S" Click="SaveAs"/>
+                <MenuItem Header="Save" InputGestureText="Ctrl+S" Click="SaveFile"/>
+                <MenuItem Header="Save As" InputGestureText="Ctrl+Shift+S" Click="SaveFileAs"/>
                 <Separator/>
-                <MenuItem Header="Exit" InputGestureText="Alt+F4" Click="Exit"/>
+                <MenuItem Header="Exit" InputGestureText="Alt+F4" Click="ExitApp"/>
             </MenuItem>
             <MenuItem Header="Edit">
-                <MenuItem Header="Undo" InputGestureText="Ctrl+Z"/>
-                <MenuItem Header="Redo" InputGestureText="Ctrl+Y"/>
+                <MenuItem Header="Undo" InputGestureText="Ctrl+Z" Click="UndoText"/>
+                <MenuItem Header="Redo" InputGestureText="Ctrl+Y" Click="RedoText"/>
                 <Separator/>
-                <MenuItem Header="Cut" InputGestureText="Ctrl+X"/>
-                <MenuItem Header="Copy" InputGestureText="Ctrl+C"/>
-                <MenuItem Header="Paste" InputGestureText="Ctrl+V"/>
-                <MenuItem Header="Delete" InputGestureText="Del"/>
+                <MenuItem Header="Cut" InputGestureText="Ctrl+X" Click="CutText"/>
+                <MenuItem Header="Copy" InputGestureText="Ctrl+C" Click="CopyText"/>
+                <MenuItem Header="Paste" InputGestureText="Ctrl+V" Click="PasteText"/>
+                <MenuItem Header="Delete" InputGestureText="Del" Click="DeleteText"/>
                 <Separator/>
-                <MenuItem Header="Select All" InputGestureText="Ctrl+A"/>
+                <MenuItem Header="Select All" InputGestureText="Ctrl+A" Click="SelectAllText"/>
             </MenuItem>
             <MenuItem Header="Options">
-                <MenuItem Header="Preferences"/>
+                <MenuItem Header="Preferences" Click="ShowPreferences"/>
                 <Separator/>
-                <MenuItem Header="About SecurePad"/>
+                <MenuItem Header="About SecurePad" Click="ShowAbout"/>
             </MenuItem>
         </Menu>
         <avalonEdit:TextEditor x:Name="Document" ShowLineNumbers="True" FontSize="14" FontFamily="Fira Code"/>

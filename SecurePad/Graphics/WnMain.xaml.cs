@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Media;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace SecurePad.Graphics
 {
@@ -8,11 +9,11 @@ namespace SecurePad.Graphics
     public partial class WnMain
     {
 
-        private readonly string[] _fileArgs;
+        private string _currentFilePath;
 
-        public WnMain(string[] fileArgs = null)
+        public WnMain(string preloadFilePath = null)
         {
-            _fileArgs = fileArgs;
+            _currentFilePath = preloadFilePath;
             InitializeComponent();
             if (App.Settings.EnableDarkMode)
                 Document.Foreground = new SolidColorBrush(Colors.White);
@@ -20,7 +21,7 @@ namespace SecurePad.Graphics
 
         private void LoadFileArgs(object sender, RoutedEventArgs args)
         {
-            if (!(_fileArgs != null && _fileArgs.Length > 0))
+            if (string.IsNullOrEmpty(_currentFilePath))
                 return;
             // TODO
         }
@@ -30,29 +31,76 @@ namespace SecurePad.Graphics
             // TODO
         }
 
-        private void New(object sender, RoutedEventArgs args)
+        private void NewFile(object sender, RoutedEventArgs args)
         {
             // TODO
         }
 
-        private void Open(object sender, RoutedEventArgs args)
+        private void OpenFile(object sender, RoutedEventArgs args)
         {
             // TODO
         }
 
-        private void Save(object sender, RoutedEventArgs args)
+        private void SaveFile(object sender, RoutedEventArgs args)
         {
             // TODO
         }
 
-        private void SaveAs(object sender, RoutedEventArgs args)
+        private void SaveFileAs(object sender, RoutedEventArgs args)
         {
             // TODO
         }
 
-        private void Exit(object sender, RoutedEventArgs args)
+        private void ExitApp(object sender, RoutedEventArgs args)
         {
             Application.Current.Shutdown();
+        }
+
+        private void UndoText(object sender, RoutedEventArgs args)
+        {
+            if (Document.CanUndo)
+                Document.Undo();
+        }
+
+        private void RedoText(object sender, RoutedEventArgs args)
+        {
+            if (Document.CanRedo)
+                Document.Redo();
+        }
+
+        private void CutText(object sender, RoutedEventArgs args)
+        {
+            Document.Cut();
+        }
+
+        private void CopyText(object sender, RoutedEventArgs args)
+        {
+            Document.Copy();
+        }
+
+        private void PasteText(object sender, RoutedEventArgs args)
+        {
+            Document.Paste();
+        }
+
+        private void DeleteText(object sender, RoutedEventArgs args)
+        {
+            Document.Delete();
+        }
+
+        private void SelectAllText(object sender, RoutedEventArgs args)
+        {
+            Document.SelectAll();
+        }
+
+        private void ShowPreferences(object sender, RoutedEventArgs args)
+        {
+            new WnPreferences { Owner = this }.Show();
+        }
+
+        private async void ShowAbout(object sender, RoutedEventArgs args)
+        {
+            await this.ShowMessageAsync("About SecurePad", "This program was created by Dennise Catolos.\n\nContact me on Discord, @dentolos19#6996.\nFind me on GitHub, @dentolos19.\nFind me on Twitter, @dentolos19.");
         }
 
     }
