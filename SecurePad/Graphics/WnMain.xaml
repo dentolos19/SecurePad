@@ -1,79 +1,43 @@
 ﻿<mahApps:MetroWindow x:Class="SecurePad.Graphics.WnMain"
-                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                     xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
-                     xmlns:mahApps="http://metro.mahapps.com/winfx/xaml/controls"
-                     Title="SecurePad" Closing="CheckUnsaved" TitleCharacterCasing="Normal"
-                     Loaded="InitializePreLoaded">
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mahApps="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+        Title="SecurePad" SaveWindowPosition="True" Loaded="LoadFileArgs" Closing="ClickUnsaved">
     <Window.CommandBindings>
         <CommandBinding Command="New" Executed="New"/>
         <CommandBinding Command="Open" Executed="Open"/>
         <CommandBinding Command="Save" Executed="Save"/>
         <CommandBinding Command="SaveAs" Executed="SaveAs"/>
     </Window.CommandBindings>
-    <Window.InputBindings>
-        <KeyBinding Key="N" Modifiers="Control" Command="New"/>
-        <KeyBinding Key="O" Modifiers="Control" Command="Open"/>
-        <KeyBinding Key="S" Modifiers="Control" Command="Save"/>
-        <KeyBinding Key="S" Modifiers="Control+Shift" Command="SaveAs"/>
-    </Window.InputBindings>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
-                <MenuItem Header="New" Click="New" InputGestureText="Ctrl+N"/>
-                <MenuItem Header="Open" Click="Open" InputGestureText="Ctrl+O"/>
+                <MenuItem Header="New" InputGestureText="Ctrl+N" Click="New"/>
+                <MenuItem Header="Open" InputGestureText="Ctrl+O" Click="Open"/>
                 <Separator/>
-                <MenuItem Header="Save" Click="Save" InputGestureText="Ctrl+S"/>
-                <MenuItem Header="Save As" Click="SaveAs" InputGestureText="Ctrl+Shift+S"/>
+                <MenuItem Header="Save" InputGestureText="Ctrl+S" Click="Save"/>
+                <MenuItem Header="Save As" InputGestureText="Ctrl+Shift+S" Click="SaveAs"/>
                 <Separator/>
-                <MenuItem Header="Exit" Click="Exit" InputGestureText="Alt+F4"/>
+                <MenuItem Header="Exit" InputGestureText="Alt+F4" Click="Exit"/>
             </MenuItem>
             <MenuItem Header="Edit">
-                <MenuItem Header="Undo" Click="Undo" InputGestureText="Ctrl+Z"/>
-                <MenuItem Header="Redo" Click="Redo" InputGestureText="Ctrl+Y"/>
+                <MenuItem Header="Undo" InputGestureText="Ctrl+Z"/>
+                <MenuItem Header="Redo" InputGestureText="Ctrl+Y"/>
                 <Separator/>
-                <MenuItem Header="Cut" Click="Cut" InputGestureText="Ctrl+X"/>
-                <MenuItem Header="Copy" Click="Copy" InputGestureText="Ctrl+C"/>
-                <MenuItem Header="Paste" Click="Paste" InputGestureText="Ctrl+V"/>
-                <MenuItem Header="Delete" Click="Delete" InputGestureText="Del"/>
+                <MenuItem Header="Cut" InputGestureText="Ctrl+X"/>
+                <MenuItem Header="Copy" InputGestureText="Ctrl+C"/>
+                <MenuItem Header="Paste" InputGestureText="Ctrl+V"/>
+                <MenuItem Header="Delete" InputGestureText="Del"/>
                 <Separator/>
-                <MenuItem Header="Select All" Click="SelectAll" InputGestureText="Ctrl+A"/>
+                <MenuItem Header="Select All" InputGestureText="Ctrl+A"/>
             </MenuItem>
             <MenuItem Header="Options">
-                <MenuItem Header="Change App Theme">
-                    <MenuItem x:Name="MenuThemeSwitchItem" Header="Switch To " Click="SwitchThemeMode"/>
-                    <ComboBox x:Name="MenuAccentComboBox" DropDownClosed="SwitchAccentStyle">
-                        <ComboBoxItem Content="Red"/>
-                        <ComboBoxItem Content="Green"/>
-                        <ComboBoxItem Content="Blue"/>
-                        <ComboBoxItem Content="Purple"/>
-                        <ComboBoxItem Content="Orange"/>
-                        <ComboBoxItem Content="Lime"/>
-                        <ComboBoxItem Content="Emerald"/>
-                        <ComboBoxItem Content="Teal"/>
-                        <ComboBoxItem Content="Cyan"/>
-                        <ComboBoxItem Content="Cobalt"/>
-                        <ComboBoxItem Content="Indigo"/>
-                        <ComboBoxItem Content="Violet"/>
-                        <ComboBoxItem Content="Pink"/>
-                        <ComboBoxItem Content="Magenta"/>
-                        <ComboBoxItem Content="Crimson"/>
-                        <ComboBoxItem Content="Amber"/>
-                        <ComboBoxItem Content="Yellow"/>
-                        <ComboBoxItem Content="Brown"/>
-                        <ComboBoxItem Content="Olive"/>
-                        <ComboBoxItem Content="Steel"/>
-                        <ComboBoxItem Content="Mauve"/>
-                        <ComboBoxItem Content="Taupe"/>
-                        <ComboBoxItem Content="Sienna"/>
-                    </ComboBox>
-                </MenuItem>
-                <MenuItem Header="Update Security Seed" Click="UpdateSecuritySeed"/>
+                <MenuItem Header="Preferences"/>
                 <Separator/>
-                <MenuItem Header="About SecurePad" Click="OpenAbout"/>
+                <MenuItem Header="About SecurePad"/>
             </MenuItem>
         </Menu>
-        <avalonEdit:TextEditor x:Name="Document" ShowLineNumbers="True" FontFamily="Consolas" AllowDrop="True"
-                               Drop="FileDrop" FontSize="16"/>
+        <avalonEdit:TextEditor x:Name="Document" ShowLineNumbers="True" FontSize="14" FontFamily="Fira Code"/>
     </DockPanel>
 </mahApps:MetroWindow>

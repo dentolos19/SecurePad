@@ -4,36 +4,19 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
     <UseWPF>true</UseWPF>
-    <Authors>Dennise Catolos</Authors>
-    <Copyright>Copyright © 2020</Copyright>
-    <Version>1.1.5</Version>
-    <NeutralLanguage>en</NeutralLanguage>
-    <SignAssembly>true</SignAssembly>
-    <DelaySign></DelaySign>
-    <AssemblyOriginatorKeyFile>Properties\AssemblyKey.snk</AssemblyOriginatorKeyFile>
     <StartupObject>SecurePad.App</StartupObject>
-    <ApplicationIcon>Resources\Icon.ico</ApplicationIcon>
+    <Authors>Dennise Catolos</Authors>
     <Company>Aprodots</Company>
+    <Copyright>Copyright © 2020</Copyright>
+    <Version>1.2.0</Version>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Properties\AssemblyKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-
-	<ItemGroup>
-    <None Remove=".gitattributes" />
-    <None Remove=".gitignore" />
-    <None Remove="Icon.ico" />
-    <None Remove="LICENSE" />
-    <None Remove="README.md" />
-    <None Remove="Resources\Logo.png" />
-    <None Remove="VERSION" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AvalonEdit" Version="6.0.1" />
-    <PackageReference Include="MahApps.Metro" Version="2.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Resources\Icon.ico" />
-    <Resource Include="Resources\Logo.png" />
+    <PackageReference Include="MahApps.Metro" Version="2.1.1" />
+    <PackageReference Include="MaterialDesignThemes.MahApps" Version="0.1.4" />
   </ItemGroup>
 
 </Project>

@@ -10,32 +10,30 @@ namespace SecurePad.Core
 
         private static readonly string Source = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SecurePad.cfg");
         private static readonly XmlSerializer Serializer = new XmlSerializer(typeof(Configuration));
-        public string Accent = "Cobalt";
 
-        public bool IsDarkMode = true;
-        public string Seed = Utilities.GetUniqueCode();
+        public bool EnableDarkMode = true;
+        public string ThemeAccent = "Cobalt";
 
         public void Save()
         {
-            var temp = Seed;
-            Seed = Utilities.ToHexString(Seed);
-            var stream = new StreamWriter(Source);
+            var stream = new FileStream(Source, FileMode.Create);
             Serializer.Serialize(stream, this);
             stream.Close();
-            Seed = temp;
+        }
+
+        public void Reset()
+        {
+            if (File.Exists(Source))
+                File.Delete(Source);
         }
 
         public static Configuration Load()
         {
-            var result = new Configuration();
             if (!File.Exists(Source))
-                return result;
-            var stream = new StreamReader(Source);
-            result = Serializer.Deserialize(stream) as Configuration;
+                return new Configuration();
+            var stream = new FileStream(Source, FileMode.Open);
+            var result = Serializer.Deserialize(stream) as Configuration;
             stream.Close();
-            if (result == null)
-                return null;
-            result.Seed = Utilities.FromHexString(result.Seed);
             return result;
         }
 

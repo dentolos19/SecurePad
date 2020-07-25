@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.30002.166
+VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurePad", "SecurePad\SecurePad.csproj", "{F4369BE1-8347-451B-8F83-1AA3F4CAE451}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurePad", "SecurePad\SecurePad.csproj", "{9E740712-5EFA-4C7A-ABD9-23484228E709}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F4369BE1-8347-451B-8F83-1AA3F4CAE451}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F4369BE1-8347-451B-8F83-1AA3F4CAE451}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F4369BE1-8347-451B-8F83-1AA3F4CAE451}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F4369BE1-8347-451B-8F83-1AA3F4CAE451}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E740712-5EFA-4C7A-ABD9-23484228E709}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E740712-5EFA-4C7A-ABD9-23484228E709}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E740712-5EFA-4C7A-ABD9-23484228E709}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E740712-5EFA-4C7A-ABD9-23484228E709}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {DB0DD943-AAA0-48C7-8C9A-7CC6C8021528}
+		SolutionGuid = {7988FA8F-E9F8-4D81-A5D9-EF420A0BDC51}
 	EndGlobalSection
 EndGlobal
