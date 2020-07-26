@@ -23,14 +23,14 @@ namespace SecurePad.Graphics
             App.Settings.ThemeAccent = ThemeAccentBox.Text;
             App.Settings.EnableDarkMode = EnableDarkModeSwitch.IsChecked == true;
             App.Settings.Save();
-            if (MessageBox.Show("All settings has been saved, do you want to restart this program?", "SmModStudio", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (MessageBox.Show("All settings has been saved, do you want to restart this program?", "SecurePad", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 Utilities.RestartApp();
         }
 
         private void ResetSettings(object sender, RoutedEventArgs args)
         {
             App.Settings.Reset();
-            MessageBox.Show("All settings has changed to their default settings, after closing this window this program will restart.", "SmModStudio");
+            MessageBox.Show("All settings has changed to their default settings, after closing this window this program will restart.", "SecurePad");
             Utilities.RestartApp();
         }
 

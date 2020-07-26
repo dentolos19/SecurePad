@@ -65,10 +65,10 @@
                 </Button>
             </ToolBar>
             <ToolBar>
-                <Button ToolTip="Encrypt">
+                <Button ToolTip="Encrypt" Click="EncryptText">
                     <Image Source="../Resources/Assets/Encrypt.png" Width="15" Height="15"/>
                 </Button>
-                <Button ToolTip="Decrypt">
+                <Button ToolTip="Decrypt" Click="DecryptText">
                     <Image Source="../Resources/Assets/Decrypt.png" Width="15" Height="15"/>
                 </Button>
             </ToolBar>
