@@ -15,7 +15,7 @@ namespace SecurePad.Graphics
         private void LoadSettings(object sender, RoutedEventArgs args)
         {
             ThemeAccentBox.Text = App.Settings.ThemeAccent;
-            EnableDarkModeSwitch.IsEnabled = App.Settings.EnableDarkMode;
+            EnableDarkModeSwitch.IsChecked = App.Settings.EnableDarkMode;
         }
 
         private void SaveSettings(object sender, RoutedEventArgs args)

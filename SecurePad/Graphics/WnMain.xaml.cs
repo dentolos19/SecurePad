@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using MahApps.Metro.Controls.Dialogs;
+using Microsoft.Win32;
 
 namespace SecurePad.Graphics
 {
@@ -26,71 +28,85 @@ namespace SecurePad.Graphics
             // TODO
         }
 
-        private void ClickUnsaved(object sender, CancelEventArgs args)
+        private void CheckUnsaved(object sender, CancelEventArgs args)
         {
-            // TODO
+            if (!Document.IsModified)
+                return;
+            var input = MessageBox.Show("You still have unsaved changes! Do you want to save your file changes?", "SecurePad", MessageBoxButton.YesNoCancel);
+            if (input == MessageBoxResult.Yes)
+            {
+                SaveFile(null, null);
+            }
+            else if (input == MessageBoxResult.Cancel)
+            {
+                args.Cancel = true;
+            }
         }
 
-        private void NewFile(object sender, RoutedEventArgs args)
+        private void NewFile(object sender, ExecutedRoutedEventArgs args)
         {
-            // TODO
+            if (Document.IsModified)
+            {
+                var input = MessageBox.Show("You still have unsaved changes! Do you want to save your file changes?", "SecurePad", MessageBoxButton.YesNoCancel);
+                if (input == MessageBoxResult.Yes)
+                {
+                    SaveFile(null, null);
+                }
+                else if (input == MessageBoxResult.Cancel)
+                {
+                    return;
+                }
+            }
+            _currentFilePath = string.Empty;
+            Document.Text = string.Empty;
+            Document.IsModified = false;
         }
 
-        private void OpenFile(object sender, RoutedEventArgs args)
+        private void OpenFile(object sender, ExecutedRoutedEventArgs args)
         {
-            // TODO
+            if (Document.IsModified)
+            {
+                var input = MessageBox.Show("You still have unsaved changes! Do you want to save your file changes?", "SecurePad", MessageBoxButton.YesNoCancel);
+                if (input == MessageBoxResult.Yes)
+                {
+                    SaveFile(null, null);
+                }
+                else if (input == MessageBoxResult.Cancel)
+                {
+                    return;
+                }
+            }
+            var dialog = new OpenFileDialog();
+            if (dialog.ShowDialog() == false)
+                return;
+            _currentFilePath = dialog.FileName;
+            Document.Load(_currentFilePath);
         }
 
-        private void SaveFile(object sender, RoutedEventArgs args)
+        private void SaveFile(object sender, ExecutedRoutedEventArgs args)
         {
-            // TODO
+            if (string.IsNullOrEmpty(_currentFilePath))
+            {
+                SaveFileAs(null, null);
+            }
+            else
+            {
+                Document.Save(_currentFilePath);
+            }
         }
 
-        private void SaveFileAs(object sender, RoutedEventArgs args)
+        private void SaveFileAs(object sender, ExecutedRoutedEventArgs args)
         {
-            // TODO
+            var dialog = new SaveFileDialog();
+            if (dialog.ShowDialog() == false)
+                return;
+            _currentFilePath = dialog.FileName;
+            Document.Save(_currentFilePath);
         }
 
         private void ExitApp(object sender, RoutedEventArgs args)
         {
             Application.Current.Shutdown();
-        }
-
-        private void UndoText(object sender, RoutedEventArgs args)
-        {
-            if (Document.CanUndo)
-                Document.Undo();
-        }
-
-        private void RedoText(object sender, RoutedEventArgs args)
-        {
-            if (Document.CanRedo)
-                Document.Redo();
-        }
-
-        private void CutText(object sender, RoutedEventArgs args)
-        {
-            Document.Cut();
-        }
-
-        private void CopyText(object sender, RoutedEventArgs args)
-        {
-            Document.Copy();
-        }
-
-        private void PasteText(object sender, RoutedEventArgs args)
-        {
-            Document.Paste();
-        }
-
-        private void DeleteText(object sender, RoutedEventArgs args)
-        {
-            Document.Delete();
-        }
-
-        private void SelectAllText(object sender, RoutedEventArgs args)
-        {
-            Document.SelectAll();
         }
 
         private void ShowPreferences(object sender, RoutedEventArgs args)

@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mahApps="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
-        Title="SecurePad" TitleCharacterCasing="Normal" SaveWindowPosition="True" Loaded="LoadFileArgs" Closing="ClickUnsaved">
+        Title="SecurePad" TitleCharacterCasing="Normal" SaveWindowPosition="True" Loaded="LoadFileArgs" Closing="CheckUnsaved">
     <Window.CommandBindings>
         <CommandBinding Command="New" Executed="NewFile"/>
         <CommandBinding Command="Open" Executed="OpenFile"/>
@@ -13,24 +13,24 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
-                <MenuItem Header="New" InputGestureText="Ctrl+N" Click="NewFile"/>
-                <MenuItem Header="Open" InputGestureText="Ctrl+O" Click="OpenFile"/>
+                <MenuItem Header="New" InputGestureText="Ctrl+N" Command="New"/>
+                <MenuItem Header="Open" InputGestureText="Ctrl+O" Command="Open"/>
                 <Separator/>
-                <MenuItem Header="Save" InputGestureText="Ctrl+S" Click="SaveFile"/>
-                <MenuItem Header="Save As" InputGestureText="Ctrl+Shift+S" Click="SaveFileAs"/>
+                <MenuItem Header="Save" InputGestureText="Ctrl+S" Command="Save"/>
+                <MenuItem Header="Save As" InputGestureText="Ctrl+Shift+S" Command="SaveAs"/>
                 <Separator/>
                 <MenuItem Header="Exit" InputGestureText="Alt+F4" Click="ExitApp"/>
             </MenuItem>
             <MenuItem Header="Edit">
-                <MenuItem Header="Undo" InputGestureText="Ctrl+Z" Click="UndoText"/>
-                <MenuItem Header="Redo" InputGestureText="Ctrl+Y" Click="RedoText"/>
+                <MenuItem Header="Undo" InputGestureText="Ctrl+Z" Command="Undo"/>
+                <MenuItem Header="Redo" InputGestureText="Ctrl+Y" Command="Redo"/>
                 <Separator/>
-                <MenuItem Header="Cut" InputGestureText="Ctrl+X" Click="CutText"/>
-                <MenuItem Header="Copy" InputGestureText="Ctrl+C" Click="CopyText"/>
-                <MenuItem Header="Paste" InputGestureText="Ctrl+V" Click="PasteText"/>
-                <MenuItem Header="Delete" InputGestureText="Del" Click="DeleteText"/>
+                <MenuItem Header="Cut" InputGestureText="Ctrl+X" Command="Cut"/>
+                <MenuItem Header="Copy" InputGestureText="Ctrl+C" Command="Copy"/>
+                <MenuItem Header="Paste" InputGestureText="Ctrl+V" Command="Paste"/>
+                <MenuItem Header="Delete" InputGestureText="Del" Command="Delete"/>
                 <Separator/>
-                <MenuItem Header="Select All" InputGestureText="Ctrl+A" Click="SelectAllText"/>
+                <MenuItem Header="Select All" InputGestureText="Ctrl+A" Command="SelectAll"/>
             </MenuItem>
             <MenuItem Header="Options">
                 <MenuItem Header="Preferences" Click="ShowPreferences"/>
@@ -38,6 +38,41 @@
                 <MenuItem Header="About SecurePad" Click="ShowAbout"/>
             </MenuItem>
         </Menu>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Command="Undo" ToolTip="Undo">
+                    <Image Source="../Resources/Assets/Undo.png" Width="15" Height="15"/>
+                </Button>
+                <Button Command="Redo" ToolTip="Redo">
+                    <Image Source="../Resources/Assets/Redo.png" Width="15" Height="15"/>
+                </Button>
+                <Button Command="Save" ToolTip="Save">
+                    <Image Source="../Resources/Assets/Save.png" Width="15" Height="15"/>
+                </Button>
+            </ToolBar>
+            <ToolBar>
+                <Button Command="Cut" ToolTip="Cut">
+                    <Image Source="../Resources/Assets/Cut.png" Width="15" Height="15"/>
+                </Button>
+                <Button Command="Copy" ToolTip="Copy">
+                    <Image Source="../Resources/Assets/Copy.png" Width="15" Height="15"/>
+                </Button>
+                <Button Command="Paste" ToolTip="Paste">
+                    <Image Source="../Resources/Assets/Paste.png" Width="15" Height="15"/>
+                </Button>
+                <Button Command="Delete" ToolTip="Delete">
+                    <Image Source="../Resources/Assets/Delete.png" Width="15" Height="15"/>
+                </Button>
+            </ToolBar>
+            <ToolBar>
+                <Button ToolTip="Encrypt">
+                    <Image Source="../Resources/Assets/Encrypt.png" Width="15" Height="15"/>
+                </Button>
+                <Button ToolTip="Decrypt">
+                    <Image Source="../Resources/Assets/Decrypt.png" Width="15" Height="15"/>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
         <avalonEdit:TextEditor x:Name="Document" ShowLineNumbers="True" FontSize="14" FontFamily="Fira Code"/>
     </DockPanel>
 </mahApps:MetroWindow>
