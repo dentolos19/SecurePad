@@ -32,6 +32,10 @@
                 <Separator/>
                 <MenuItem Header="Select All" InputGestureText="Ctrl+A" Command="SelectAll"/>
             </MenuItem>
+            <MenuItem Header="Document">
+                <MenuItem Header="Encrypt" Click="EncryptText"/>
+                <MenuItem Header="Decrypt" Click="DecryptText"/>
+            </MenuItem>
             <MenuItem Header="Options">
                 <MenuItem Header="Preferences" Click="ShowPreferences"/>
                 <Separator/>

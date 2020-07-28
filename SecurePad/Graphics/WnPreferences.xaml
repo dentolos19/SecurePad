@@ -12,31 +12,7 @@
         <StackPanel>
             <DockPanel Margin="10,10,10,0">
                 <Label DockPanel.Dock="Left" Content="Accent Name" Width="100" Margin="0,0,10,0"/>
-                <ComboBox x:Name="ThemeAccentBox">
-                    <ComboBoxItem Content="Red"/>
-                    <ComboBoxItem Content="Green"/>
-                    <ComboBoxItem Content="Blue"/>
-                    <ComboBoxItem Content="Purple"/>
-                    <ComboBoxItem Content="Orange"/>
-                    <ComboBoxItem Content="Lime"/>
-                    <ComboBoxItem Content="Emerald"/>
-                    <ComboBoxItem Content="Teal"/>
-                    <ComboBoxItem Content="Cyan"/>
-                    <ComboBoxItem Content="Cobalt"/>
-                    <ComboBoxItem Content="Indigo"/>
-                    <ComboBoxItem Content="Violet"/>
-                    <ComboBoxItem Content="Pink"/>
-                    <ComboBoxItem Content="Magenta"/>
-                    <ComboBoxItem Content="Crimson"/>
-                    <ComboBoxItem Content="Amber"/>
-                    <ComboBoxItem Content="Yellow"/>
-                    <ComboBoxItem Content="Brown"/>
-                    <ComboBoxItem Content="Olive"/>
-                    <ComboBoxItem Content="Steel"/>
-                    <ComboBoxItem Content="Mauve"/>
-                    <ComboBoxItem Content="Taupe"/>
-                    <ComboBoxItem Content="Sienna"/>
-                </ComboBox>
+                <ComboBox x:Name="ThemeAccentBox"/>
             </DockPanel>
             <DockPanel Margin="10,10,10,0">
                 <Label DockPanel.Dock="Left" Content="Editor Font Size" Width="100" Margin="0,0,10,0"/>

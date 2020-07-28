@@ -19,7 +19,9 @@ namespace SecurePad.Graphics
             _currentFilePath = preloadFilePath;
             InitializeComponent();
             if (App.Settings.EnableDarkMode)
+            {
                 Document.Foreground = new SolidColorBrush(Colors.White);
+            }
             Document.FontSize = App.Settings.EditorFontSize;
             Document.WordWrap = App.Settings.EditorTextWrap;
         }
