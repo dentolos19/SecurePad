@@ -13,6 +13,8 @@ namespace SecurePad.Core
 
         public bool EnableDarkMode = true;
         public string ThemeAccent = "Cobalt";
+        public int EditorFontSize = 14;
+        public bool EditorTextWrap = false;
 
         public void Save()
         {

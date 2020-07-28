@@ -39,6 +39,13 @@
                 </ComboBox>
             </DockPanel>
             <DockPanel Margin="10,10,10,0">
+                <Label DockPanel.Dock="Left" Content="Editor Font Size" Width="100" Margin="0,0,10,0"/>
+                <mahApps:NumericUpDown x:Name="EditorFontSizeBox" NumericInputMode="Numbers" Maximum="24" Minimum="0"/>
+            </DockPanel>
+            <DockPanel Margin="10,10,10,0">
+                <CheckBox x:Name="EditorTextWrapSwitch" Content="Editor Text Wrap"/>
+            </DockPanel>
+            <DockPanel Margin="10,10,10,0">
                 <CheckBox x:Name="EnableDarkModeSwitch" Content="Enable Dark Mode"/>
             </DockPanel>
         </StackPanel>

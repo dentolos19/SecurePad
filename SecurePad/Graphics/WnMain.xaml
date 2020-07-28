@@ -49,6 +49,9 @@
                 <Button Command="Save" ToolTip="Save">
                     <Image Source="../Resources/Assets/Save.png" Width="15" Height="15"/>
                 </Button>
+                <Button Command="Open" ToolTip="Open">
+                    <Image Source="../Resources/Assets/Open.png" Width="15" Height="15"/>
+                </Button>
             </ToolBar>
             <ToolBar>
                 <Button Command="Cut" ToolTip="Cut">
@@ -73,6 +76,9 @@
                 </Button>
             </ToolBar>
         </ToolBarTray>
-        <avalonEdit:TextEditor x:Name="Document" ShowLineNumbers="True" FontSize="14" FontFamily="Fira Code"/>
+        <StatusBar DockPanel.Dock="Bottom">
+            <TextBlock x:Name="FilePathStatusLabel" Text="This file is unsaved."/>
+        </StatusBar>
+        <avalonEdit:TextEditor x:Name="Document" ShowLineNumbers="True" FontFamily="Fira Code" AllowDrop="True" Drop="OpenFileDrop"/>
     </DockPanel>
 </mahApps:MetroWindow>
