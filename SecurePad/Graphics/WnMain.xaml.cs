@@ -4,6 +4,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
+using SecurePad.Core;
 
 namespace SecurePad.Graphics
 {
@@ -37,9 +38,13 @@ namespace SecurePad.Graphics
                 return;
             var input = MessageBox.Show("You still have unsaved changes! Do you want to save your file changes?", "SecurePad", MessageBoxButton.YesNoCancel);
             if (input == MessageBoxResult.Yes)
+            {
                 SaveFile(null, null);
+            }
             else if (input == MessageBoxResult.Cancel)
+            {
                 args.Cancel = true;
+            }
         }
 
         private void NewFile(object sender, ExecutedRoutedEventArgs args)
@@ -48,9 +53,13 @@ namespace SecurePad.Graphics
             {
                 var input = MessageBox.Show("You still have unsaved changes! Do you want to save your file changes?", "SecurePad", MessageBoxButton.YesNoCancel);
                 if (input == MessageBoxResult.Yes)
+                {
                     SaveFile(null, null);
+                }
                 else if (input == MessageBoxResult.Cancel)
+                {
                     return;
+                }
             }
             _currentFilePath = string.Empty;
             Document.Text = string.Empty;
@@ -64,9 +73,13 @@ namespace SecurePad.Graphics
             {
                 var input = MessageBox.Show("You still have unsaved changes! Do you want to save your file changes?", "SecurePad", MessageBoxButton.YesNoCancel);
                 if (input == MessageBoxResult.Yes)
+                {
                     SaveFile(null, null);
+                }
                 else if (input == MessageBoxResult.Cancel)
+                {
                     return;
+                }
             }
             var dialog = new OpenFileDialog { Filter = "Text Document|*.txt|All Files|*.*" };
             if (dialog.ShowDialog() == false)
@@ -126,14 +139,37 @@ namespace SecurePad.Graphics
 
         private async void EncryptText(object sender, RoutedEventArgs args)
         {
-            var password = await this.ShowInputAsync("Enter Password To Encrypt!", "Enter a new password to encrypt this text.");
-            // TODO: Encrypt Document's Text
+            var password = await this.ShowInputAsync("Enter Password To Encrypt!", "Enter a new password to encrypt this text.\n\nThe password must be strictly 16 characters long.", new MetroDialogSettings
+            {
+                AffirmativeButtonText = "Encrypt",
+                DefaultText = Cryptography.GenerateRandomKey()
+            });
+            if (string.IsNullOrEmpty(password))
+                return;
+            if (password.Length != 16)
+            {
+                MessageBox.Show("The password must be strictly 16 characters long!", "SecurePad");
+                return;
+            }
+            Document.Text = Cryptography.Encrypt(Document.Text, password);
         }
 
         private async void DecryptText(object sender, RoutedEventArgs args)
         {
-            var password = await this.ShowInputAsync("Enter Password To Decrypt!", "Enter the correct password to decrypt this text.");
-            // TODO: Decrypt Document's Text
+            var password = await this.ShowInputAsync("Enter Password To Decrypt!", "Enter the correct password to decrypt this text.", new MetroDialogSettings
+            {
+                AffirmativeButtonText = "Decrypt"
+            });
+            if (string.IsNullOrEmpty(password))
+                return;
+            if (Cryptography.Decrypt(Document.Text, password, out var decrypted))
+            {
+                Document.Text = decrypted;
+            }
+            else
+            {
+                MessageBox.Show("Data decryption failed! Might be caused by invalid key or data is invalid.", "SecurePad");
+            }
         }
 
         private void ShowPreferences(object sender, RoutedEventArgs args)

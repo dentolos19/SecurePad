@@ -7,7 +7,7 @@ using System.Windows;
 namespace SecurePad.Core
 {
 
-    public static class Utilities
+    internal static class Utilities
     {
 
         public static void SetAppTheme(string accent, bool setDark)

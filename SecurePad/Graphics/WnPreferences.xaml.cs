@@ -30,7 +30,13 @@ namespace SecurePad.Graphics
             App.WindowMain.Document.WordWrap = App.Settings.EditorTextWrap;
             App.Settings.Save();
             if (MessageBox.Show("All settings has been saved, do you want to restart this program?", "SecurePad", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
                 Utilities.RestartApp();
+            }
+            else
+            {
+                Close();
+            }
         }
 
         private void ResetSettings(object sender, RoutedEventArgs args)
