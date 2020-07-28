@@ -139,30 +139,37 @@ namespace SecurePad.Graphics
 
         private async void EncryptText(object sender, RoutedEventArgs args)
         {
-            var password = await this.ShowInputAsync("Enter Password To Encrypt!", "Enter a new password to encrypt this text.\n\nThe password must be strictly 16 characters long.", new MetroDialogSettings
+            var password = await this.ShowInputAsync("Enter Password To Encrypt!", "Enter a new password to encrypt this text.\n\nThe password must be at a max of 16 characters long.", new MetroDialogSettings
             {
                 AffirmativeButtonText = "Encrypt",
                 DefaultText = Cryptography.GenerateRandomKey()
             });
             if (string.IsNullOrEmpty(password))
                 return;
-            if (password.Length != 16)
+            if (!(password.Length <= 16))
             {
-                MessageBox.Show("The password must be strictly 16 characters long!", "SecurePad");
+                MessageBox.Show("The password must be at a max of 16 characters long!", "SecurePad");
                 return;
             }
-            Document.Text = Cryptography.Encrypt(Document.Text, password);
+            password = Cryptography.FixPasswordLength(password);
+            Document.Text = Cryptography.EncryptData(Document.Text, password);
         }
 
         private async void DecryptText(object sender, RoutedEventArgs args)
         {
-            var password = await this.ShowInputAsync("Enter Password To Decrypt!", "Enter the correct password to decrypt this text.", new MetroDialogSettings
+            var password = await this.ShowInputAsync("Enter Password To Decrypt!", "Enter the correct password to decrypt this text.\n\nThe password must be at a max of 16 characters long.", new MetroDialogSettings
             {
                 AffirmativeButtonText = "Decrypt"
             });
             if (string.IsNullOrEmpty(password))
                 return;
-            if (Cryptography.Decrypt(Document.Text, password, out var decrypted))
+            if (!(password.Length <= 16))
+            {
+                MessageBox.Show("The password must be at a max of 16 characters long!", "SecurePad");
+                return;
+            }
+            password = Cryptography.FixPasswordLength(password);
+            if (Cryptography.DecryptData(Document.Text, password, out var decrypted))
             {
                 Document.Text = decrypted;
             }

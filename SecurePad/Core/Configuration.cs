@@ -11,10 +11,10 @@ namespace SecurePad.Core
         private static readonly string Source = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SecurePad.cfg");
         private static readonly XmlSerializer Serializer = new XmlSerializer(typeof(Configuration));
 
-        public bool EnableDarkMode = true;
-        public string ThemeAccent = "Cobalt";
-        public int EditorFontSize = 14;
-        public bool EditorTextWrap = false;
+        public bool EnableDarkMode { get; set; } = true;
+        public string ThemeAccent { get; set; } = "Cobalt";
+        public int EditorFontSize { get; set; } = 14;
+        public bool EditorTextWrap { get; set; } = false;
 
         public void Save()
         {
