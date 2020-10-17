@@ -1,13 +1,22 @@
-# SecurePad
+<h1 align="center">
+  <br>
+    <img src="./.github/icon.png" width="200">
+  <br>
+    SecurePad
+  <br>
+</h1>
 
-This is the second in the first ever projects that I've created within my GitHub profile! This is a high-level encryption text editor that protects your files from being viewed by unauthortised users.
+<p align="center">
+  <a>
+    <img src="https://badgen.net/badge/icon/Windows%20%7C%20.NET%205.0?icon=windows&label">
+  </a>
+  <a>
+    <img src="https://badgen.net/badge/icon/Visual%20Studio%202019?icon=visualstudio&label">
+  </a>
+</p>
 
-![Preview](https://dentolos19.github.io/previews/securepad.png)
+## Screenshots
 
-### Contributing
-
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-### License
-
-This project is licensed with the [MIT License](https://choosealicense.com/licenses/mit).
+![](./.github/screenshots/0.png)
+![](./.github/screenshots/1.png)
+![](./.github/screenshots/2.png)
