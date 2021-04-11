@@ -1,51 +1,37 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
+    
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    
     <UseWPF>true</UseWPF>
-    <StartupObject>SecurePad.App</StartupObject>
-    <Authors>Dennise Catolos</Authors>
-    <Company>Aprodots</Company>
-    <Copyright>Copyright © 2020</Copyright>
-    <Version>1.2.0</Version>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>Properties\AssemblyKey.snk</AssemblyOriginatorKeyFile>
     <ApplicationIcon>Resources\Assets\Icon.ico</ApplicationIcon>
+    <Authors>Dennise Catolos</Authors>
+    <Version>1.2.0</Version>
+    <Copyright>Copyright © 2021</Copyright>
+    
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\Assets\Copy.png" />
-    <None Remove="Resources\Assets\Cut.png" />
-    <None Remove="Resources\Assets\Decrypt.png" />
-    <None Remove="Resources\Assets\Delete.png" />
-    <None Remove="Resources\Assets\Encrypt.png" />
-    <None Remove="Resources\Assets\Logo.png" />
-    <None Remove="Resources\Assets\Open.png" />
-    <None Remove="Resources\Assets\Paste.png" />
-    <None Remove="Resources\Assets\Redo.png" />
-    <None Remove="Resources\Assets\Save.png" />
-    <None Remove="Resources\Assets\Undo.png" />
+    <PackageReference Include="AvalonEdit" Version="6.0.1"/>
+    <PackageReference Include="MahApps.Metro" Version="2.1.1"/>
+    <PackageReference Include="MaterialDesignThemes.MahApps" Version="0.1.4"/>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AvalonEdit" Version="6.0.1" />
-    <PackageReference Include="MahApps.Metro" Version="2.1.1" />
-    <PackageReference Include="MaterialDesignThemes.MahApps" Version="0.1.4" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Resources\Assets\Copy.png" />
-    <Resource Include="Resources\Assets\Cut.png" />
-    <Resource Include="Resources\Assets\Delete.png" />
-    <Resource Include="Resources\Assets\Encrypt.png" />
-    <Resource Include="Resources\Assets\Logo.png" />
-    <Resource Include="Resources\Assets\Open.png" />
-    <Resource Include="Resources\Assets\Paste.png" />
-    <Resource Include="Resources\Assets\Redo.png" />
-    <Resource Include="Resources\Assets\Save.png" />
-    <Resource Include="Resources\Assets\Undo.png" />
-    <Resource Include="Resources\Assets\Decrypt.png" />
+    <Resource Include="Resources\Assets\Copy.png"/>
+    <Resource Include="Resources\Assets\Cut.png"/>
+    <Resource Include="Resources\Assets\Delete.png"/>
+    <Resource Include="Resources\Assets\Encrypt.png"/>
+    <Resource Include="Resources\Assets\Logo.png"/>
+    <Resource Include="Resources\Assets\Open.png"/>
+    <Resource Include="Resources\Assets\Paste.png"/>
+    <Resource Include="Resources\Assets\Redo.png"/>
+    <Resource Include="Resources\Assets\Save.png"/>
+    <Resource Include="Resources\Assets\Undo.png"/>
+    <Resource Include="Resources\Assets\Decrypt.png"/>
   </ItemGroup>
 
 </Project>
