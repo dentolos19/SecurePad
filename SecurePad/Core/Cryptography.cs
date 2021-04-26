@@ -9,16 +9,19 @@ namespace SecurePad.Core
     public static class Cryptography
     {
 
-        private static readonly Random Randomizer = new Random();
         private const string Characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        private static readonly Random Randomizer = new();
 
         public static string EncryptData(string data, string key)
         {
             var array = Encoding.UTF8.GetBytes(data);
-            var provider = new AesCryptoServiceProvider();
-            provider.Key = Encoding.UTF8.GetBytes(key);
-            provider.Mode = CipherMode.ECB;
-            provider.Padding = PaddingMode.PKCS7;
+            var provider = new AesCryptoServiceProvider
+            {
+                Key = Encoding.UTF8.GetBytes(key),
+                Mode = CipherMode.ECB,
+                Padding = PaddingMode.PKCS7
+            };
             var encryptor = provider.CreateEncryptor();
             var result = encryptor.TransformFinalBlock(array, 0, array.Length);
             provider.Clear();
@@ -30,19 +33,21 @@ namespace SecurePad.Core
             try
             {
                 var array = Convert.FromBase64String(data);
-                var provider = new AesCryptoServiceProvider();
-                provider.Key = Encoding.UTF8.GetBytes(key);
-                provider.Mode = CipherMode.ECB;
-                provider.Padding = PaddingMode.PKCS7;
+                var provider = new AesCryptoServiceProvider
+                {
+                    Key = Encoding.UTF8.GetBytes(key),
+                    Mode = CipherMode.ECB,
+                    Padding = PaddingMode.PKCS7
+                };
                 var decryptor = provider.CreateDecryptor();
                 var resultArray = decryptor.TransformFinalBlock(array, 0, array.Length);
-                provider.Clear();   
+                provider.Clear();
                 output = Encoding.UTF8.GetString(resultArray);
                 return true;
             }
             catch
             {
-                output = null;
+                output = null!;
                 return false;
             }
         }
@@ -50,14 +55,11 @@ namespace SecurePad.Core
         public static string FixPasswordLength(string password)
         {
             if (string.IsNullOrEmpty(password) || password.Length > 16)
-                return null;
+                throw new ArgumentOutOfRangeException(nameof(password));
             if (password.Length == 16)
                 return password;
             var charsNeeded = 16 - password.Length;
-            for (var index = 0; index < charsNeeded; index++)
-            {
-                password += "X";
-            }
+            for (var index = 0; index < charsNeeded; index++) password += "X";
             return password;
         }
 
@@ -68,7 +70,7 @@ namespace SecurePad.Core
 
         private static string GenerateRandomString(int length)
         {
-            return new string(Enumerable.Repeat(Characters, length).Select(index => index[Randomizer.Next(index.Length)]).ToArray());
+            return new(Enumerable.Repeat(Characters, length).Select(index => index[Randomizer.Next(index.Length)]).ToArray());
         }
 
     }

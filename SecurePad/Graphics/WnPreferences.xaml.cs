@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 using ControlzEx.Theming;
 using SecurePad.Core;
@@ -13,10 +12,7 @@ namespace SecurePad.Graphics
         public WnPreferences()
         {
             InitializeComponent();
-            foreach (var color in ThemeManager.Current.ColorSchemes)
-            {
-                ThemeAccentBox.Items.Add(color);
-            }
+            foreach (var color in ThemeManager.Current.ColorSchemes) ThemeAccentBox.Items.Add(color);
         }
 
         private void LoadSettings(object sender, RoutedEventArgs args)

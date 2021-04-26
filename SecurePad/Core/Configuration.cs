@@ -9,7 +9,7 @@ namespace SecurePad.Core
     {
 
         private static readonly string Source = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SecurePad.cfg");
-        private static readonly XmlSerializer Serializer = new XmlSerializer(typeof(Configuration));
+        private static readonly XmlSerializer Serializer = new(typeof(Configuration));
 
         public bool EnableDarkMode { get; set; } = true;
         public string ThemeAccent { get; set; } = "Cobalt";
@@ -36,7 +36,7 @@ namespace SecurePad.Core
             var stream = new FileStream(Source, FileMode.Open);
             var result = Serializer.Deserialize(stream) as Configuration;
             stream.Close();
-            return result;
+            return result!;
         }
 
     }

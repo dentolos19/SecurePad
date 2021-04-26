@@ -1,37 +1,35 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
-  <PropertyGroup>
-    
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    
-    <UseWPF>true</UseWPF>
-    <ApplicationIcon>Resources\Assets\Icon.ico</ApplicationIcon>
-    <Authors>Dennise Catolos</Authors>
-    <Version>1.2.0</Version>
-    <Copyright>Copyright © 2021</Copyright>
-    
-  </PropertyGroup>
+	<PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="AvalonEdit" Version="6.0.1"/>
-    <PackageReference Include="MahApps.Metro" Version="2.1.1"/>
-    <PackageReference Include="MaterialDesignThemes.MahApps" Version="0.1.4"/>
-  </ItemGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net5.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
 
-  <ItemGroup>
-    <Resource Include="Resources\Assets\Copy.png"/>
-    <Resource Include="Resources\Assets\Cut.png"/>
-    <Resource Include="Resources\Assets\Delete.png"/>
-    <Resource Include="Resources\Assets\Encrypt.png"/>
-    <Resource Include="Resources\Assets\Logo.png"/>
-    <Resource Include="Resources\Assets\Open.png"/>
-    <Resource Include="Resources\Assets\Paste.png"/>
-    <Resource Include="Resources\Assets\Redo.png"/>
-    <Resource Include="Resources\Assets\Save.png"/>
-    <Resource Include="Resources\Assets\Undo.png"/>
-    <Resource Include="Resources\Assets\Decrypt.png"/>
-  </ItemGroup>
+		<ApplicationIcon>Resources\Assets\Icon.ico</ApplicationIcon>
+		<Authors>Dennise Catolos</Authors>
+
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AvalonEdit" Version="6.1.1"/>
+		<PackageReference Include="MahApps.Metro" Version="2.4.5"/>
+		<PackageReference Include="MaterialDesignThemes.MahApps" Version="0.1.6"/>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Resource Include="Resources\Assets\Copy.png"/>
+		<Resource Include="Resources\Assets\Cut.png"/>
+		<Resource Include="Resources\Assets\Delete.png"/>
+		<Resource Include="Resources\Assets\Encrypt.png"/>
+		<Resource Include="Resources\Assets\Logo.png"/>
+		<Resource Include="Resources\Assets\Open.png"/>
+		<Resource Include="Resources\Assets\Paste.png"/>
+		<Resource Include="Resources\Assets\Redo.png"/>
+		<Resource Include="Resources\Assets\Save.png"/>
+		<Resource Include="Resources\Assets\Undo.png"/>
+		<Resource Include="Resources\Assets\Decrypt.png"/>
+	</ItemGroup>
 
 </Project>

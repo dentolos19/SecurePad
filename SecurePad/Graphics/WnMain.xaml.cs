@@ -14,14 +14,11 @@ namespace SecurePad.Graphics
 
         private string _currentFilePath;
 
-        public WnMain(string preloadFilePath = null)
+        public WnMain(string? preloadFilePath = null)
         {
             _currentFilePath = preloadFilePath;
             InitializeComponent();
-            if (App.Settings.EnableDarkMode)
-            {
-                Document.Foreground = new SolidColorBrush(Colors.White);
-            }
+            if (App.Settings.EnableDarkMode) Document.Foreground = new SolidColorBrush(Colors.White);
             Document.FontSize = App.Settings.EditorFontSize;
             Document.WordWrap = App.Settings.EditorTextWrap;
         }
@@ -40,13 +37,8 @@ namespace SecurePad.Graphics
                 return;
             var input = MessageBox.Show("You still have unsaved changes! Do you want to save your file changes?", "SecurePad", MessageBoxButton.YesNoCancel);
             if (input == MessageBoxResult.Yes)
-            {
-                SaveFile(null, null);
-            }
-            else if (input == MessageBoxResult.Cancel)
-            {
-                args.Cancel = true;
-            }
+                SaveFile(null!, null!);
+            else if (input == MessageBoxResult.Cancel) args.Cancel = true;
         }
 
         private void NewFile(object sender, ExecutedRoutedEventArgs args)
@@ -55,13 +47,8 @@ namespace SecurePad.Graphics
             {
                 var input = MessageBox.Show("You still have unsaved changes! Do you want to save your file changes?", "SecurePad", MessageBoxButton.YesNoCancel);
                 if (input == MessageBoxResult.Yes)
-                {
-                    SaveFile(null, null);
-                }
-                else if (input == MessageBoxResult.Cancel)
-                {
-                    return;
-                }
+                    SaveFile(null!, null!);
+                else if (input == MessageBoxResult.Cancel) return;
             }
             _currentFilePath = string.Empty;
             Document.Text = string.Empty;
@@ -75,13 +62,8 @@ namespace SecurePad.Graphics
             {
                 var input = MessageBox.Show("You still have unsaved changes! Do you want to save your file changes?", "SecurePad", MessageBoxButton.YesNoCancel);
                 if (input == MessageBoxResult.Yes)
-                {
-                    SaveFile(null, null);
-                }
-                else if (input == MessageBoxResult.Cancel)
-                {
-                    return;
-                }
+                    SaveFile(null!, null!);
+                else if (input == MessageBoxResult.Cancel) return;
             }
             var dialog = new OpenFileDialog { Filter = "Text Document|*.txt|All Files|*.*" };
             if (dialog.ShowDialog() == false)
@@ -99,11 +81,11 @@ namespace SecurePad.Graphics
             {
                 var input = MessageBox.Show("You still have unsaved changes! Do you want to save your file changes?", "SecurePad", MessageBoxButton.YesNoCancel);
                 if (input == MessageBoxResult.Yes)
-                    SaveFile(null, null);
+                    SaveFile(null!, null!);
                 else if (input == MessageBoxResult.Cancel)
                     return;
             }
-            var filePaths = (string[])args.Data.GetData(DataFormats.FileDrop);
+            var filePaths = (string[]?)args.Data.GetData(DataFormats.FileDrop);
             if (filePaths == null)
                 return;
             if (filePaths.Length > 1)
@@ -119,7 +101,7 @@ namespace SecurePad.Graphics
         private void SaveFile(object sender, ExecutedRoutedEventArgs args)
         {
             if (string.IsNullOrEmpty(_currentFilePath))
-                SaveFileAs(null, null);
+                SaveFileAs(null!, null!);
             else
                 Document.Save(_currentFilePath);
         }
@@ -172,13 +154,9 @@ namespace SecurePad.Graphics
             }
             password = Cryptography.FixPasswordLength(password);
             if (Cryptography.DecryptData(Document.Text, password, out var decrypted))
-            {
                 Document.Text = decrypted;
-            }
             else
-            {
                 MessageBox.Show("Data decryption failed! Might be caused by invalid key or data is invalid.", "SecurePad");
-            }
         }
 
         private void ShowPreferences(object sender, RoutedEventArgs args)
